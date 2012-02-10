@@ -1,0 +1,137 @@
+div.album-thumb-img {margin:1px 0 0 1px; width:46px; height:35px; overflow:hidden; background-image-position:center; display:block}
+div.ss-frame { float:left; width:100%; }
+img.album-tn { border:1px solid #303030; }
+.add-albums-btn { float:right; }
+
+/**
+ * Albums list (add to gallery)
+ */
+div.album-row-preview { width:100%; overflow:hidden; border-bottom:1px solid #C5C5C5; padding:0 0 2px 0; }
+div.album-row-preview .tn { width:80px; float:left; }
+div.album-row-preview .meta { width:480px; float:left; }
+
+/**
+ * Albums grid
+ */
+#albums-grid li { 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    display:block;
+    border:1px #BFBDBD solid;
+    background:#F5F4F4;
+    margin:8px;
+    padding:3px;
+    float: left;
+    width:220px;
+}
+#albums-grid .header { width:100%; overflow:hidden; padding:1px; height:20px; }
+#albums-grid .album-body { height:50px; }
+#albums-grid .album-body .preview { display:block; width:46px; height:36px; margin-right:12px; position:relative; float:left; }
+#albums-grid .album-body .meta { float:left; width:140px; font-size:8px; }
+#albums-grid li .counter { 
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-align:center;
+    background:#CFCECE;
+    padding:0;
+    margin-bottom:5px;
+}
+
+/**
+ * Images grid
+ */
+#images-grid li { 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    display:block;
+    border:1px #BFBDBD solid;
+    background:#F5F4F4;
+    margin:8px;
+    padding:3px;
+    float: left;
+}
+#images-grid li div.image-block .meta { overflow:hidden; padding:1px; height:20px; text-align:center; display:block; }
+#images-grid li div.image-block a.img-container { cursor:move; }
+#images-grid li div.image-block a.img-container .scale-image { overflow:hidden; width:176px; }
+#images-grid li.block-selected { background:#E9E8E8 !important; border:1px #C5C5C5 solid; }
+div.counter, div.counter-off  { text-align:center; font-weight:bold;font-size:10px; padding:3px; }
+div.inactive { opacity:0.4; filter:alpha(opacity:40); }
+div.active { opacity:1.0; filter:alpha(opacity:100); }
+div.editBttns { display:block; margin:0 auto; }
+img.drop_target {opacity:0.20; filter:alpha(opacity:20); }
+img.video-overlay { position:absolute; top:0px; left:0; margin:0; background:#fff; border:0; }
+
+/**
+ * Edit images
+ */
+a.active-image-btn { background: url(../img/radBttn_active.gif) no-repeat 0 0; }
+a.inactive-image-btn { background: url(../img/radBttn_inactive.gif) 0 0 no-repeat; }
+a.delete-image-btn { background: url(../img/radBttn_delete.gif) no-repeat 0 0; }
+a.edit-image-btn { background: url(../img/radBttn_edit.gif) 0 0 no-repeat; }
+a.rotleft-image-btn { background: url(../img/radBttn_rotate_left.gif) 0 0 no-repeat; }
+a.rotright-image-btn { background: url(../img/radBttn_rotate_right.gif) 0 0 no-repeat; }
+a.active-image-btn, a.inactive-image-btn, a.delete-image-btn, a.edit-image-btn, a.rotleft-image-btn, a.rotright-image-btn { display:block; height:18px; width:20px; float:left; margin:0 2px 0 0; }
+a:hover.active-image-btn, a:hover.inactive-image-btn, a:hover.delete-image-btn, a:hover.edit-image-btn, a:hover.rotleft-image-btn, a:hover.rotright-image-btn { background-position:0 -18px; }
+
+/**
+ * Multi selector toolbar
+ */
+#multi-select {
+    overflow:hidden;
+    padding: 10px;
+    text-align: left;
+    border-top: 1px solid #E5E0E0;
+    background-color: #EEEEEE;
+    clear: both;
+    height: 15px;
+    position:fixed;
+    bottom:20px;
+    width:100%;
+    z-index:5;
+    float:left;
+}
+#multi-select div.fl { float:left; padding-right:10px; }
+
+/**
+ * Image edit form
+ */
+#the_img { width:100%; margin:0 auto; }
+#the_img .tall { height:400px; }
+#the_img .wide { width:100%; }
+#the_img .edit-buttons { overflow:hidden; display:block; text-align:center; height:20px; }
+#the_img .edit-buttons a { margin:0 auto; }
+#img_wrapper { position:relative; margin:0 auto; }
+#edit-box-left { width:49%; float:left; text-align:center; }
+#edit-box-right { width:49%; float:right; text-align:left; }
+#edit-box .top-buttons { width:100%; float:left; overflow:hidden; margin-bottom:20px; text-align:center; }
+#edit-box .top-buttons span { padding:0 10px; }
+#edit-box .top-buttons .submit { display:inline; }
+#edit-box .top-buttons .close { float:right; }
+#edit-box .img-info { width:98%; overflow:hidden; text-align:left; }
+#anchor { position:absolute; }
+#anchor:hover { cursor:move; }
+a.fp { background: transparent url(../img/bttn_fp.gif) no-repeat 0 0; }
+a.icon { width:16px; height:16px; padding:0; margin:1px 0 0 0; display:block; border:none; -webkit-border-radius:3px }
+a.icon:hover { background-position:0 -16px; }
+span.btn { line-height:22px; text-align:center; width:61px; overflow:hidden; margin:0 auto 0 auto; }
+
+/**
+ * Image Uploader
+ */
+div.btnBrowse { padding:3px; }
+#fsUploadProgress .progressWrapper { width: 90%;overflow: hidden; margin:10px auto 10px auto; }
+#fsUploadProgress .progressContainer { margin: 5px; padding: 4px; border: solid 1px #E8E8E8; background-color: #F7F7F7; overflow: hidden; }
+#fsUploadProgress .message { margin: 1em 0; padding: 10px 20px; border: solid 1px #FFDD99; background-color: #FFFFCC; overflow: hidden; }
+#fsUploadProgress .red { border: solid 1px #B50000; background-color: #FFEBEB; }
+#fsUploadProgress .green { border: solid 1px #DDF0DD; background-color: #EBFFEB; }
+#fsUploadProgress .blue { border: solid 1px #CEE2F2; background-color: #F0F5FF; }
+#fsUploadProgress .progressName { font-size: 8pt; font-weight: 700; color: #555; width: 323px; height: 14px; text-align: left; white-space: nowrap; overflow: hidden; }
+#fsUploadProgress .progressBarInProgress, .progressBarComplete,.progressBarError { font-size: 0; width: 0%; height: 2px; background-color: blue; margin-top: 2px; }
+#fsUploadProgress .progressBarComplete { width: 100%; background-color: green; visibility: hidden; }
+#fsUploadProgress .progressBarError { width: 100%; background-color: red; visibility: hidden; }
+#fsUploadProgress .progressBarStatus { margin-top: 2px; width: 337px; font-size: 7pt; font-family: Arial; text-align: left; white-space: nowrap; }
+#fsUploadProgress a.progressCancel { font-size: 0; display: block; height: 14px; width: 14px; background-image: url(../img/uploader/cancelbutton.gif); background-repeat: no-repeat; background-position: -14px 0px; float: right; }
+#fsUploadProgress a.progressCancel:hover { background-position: 0px 0px; }
