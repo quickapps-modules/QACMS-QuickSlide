@@ -2,7 +2,7 @@
 if (!defined('MAGICK_PATH')) {
     define('MAGICK_PATH_FINAL', 'convert');
 } elseif (strpos(strtolower(MAGICK_PATH), 'c:\\') !== false) {
-    define('MAGICK_PATH_FINAL', '"' . MAGICK_PATH . '"');	
+    define('MAGICK_PATH_FINAL', '"' . MAGICK_PATH . '"');    
 } else {
     define('MAGICK_PATH_FINAL', MAGICK_PATH);
 }
@@ -76,7 +76,7 @@ class QS {
             QS::rmkdir($ThumbFolder);
         }
 
-        $ThumbCacheName	= str_replace(".{$ext}", "", basename($filename)) . "_{$new_w}_{$new_h}_{$quality}_{$square}_{$x}_{$y}_{$force}.{$ext}";
+        $ThumbCacheName    = str_replace(".{$ext}", "", basename($filename)) . "_{$new_w}_{$new_h}_{$quality}_{$square}_{$x}_{$y}_{$force}.{$ext}";
         $ThumOld = file_exists($ThumbFolder.$ThumbCacheName) ? filectime($ThumbFolder.$ThumbCacheName) : 0;
         $name = $filename;
         $filename = $ThumbFolder.$ThumbCacheName;
@@ -123,7 +123,7 @@ class QS {
             if ($square) {
                 if ($original_aspect >= $new_aspect) {
                     $thumb_w = ($new_h*$old_x)/$old_y;
-                    $thumb_h = $new_h;				
+                    $thumb_h = $new_h;                
                     $pos_x = $thumb_w * ($x/100);
                     $pos_y = $thumb_h * ($y/100);
                 } else {
@@ -217,7 +217,7 @@ class QS {
     function rotateImage($sourceFile, $destImageName, $degreeOfRotation) {
         if (!function_exists('imagerotate') || !file_exists($sourceFile)) {
             return false;
-        }	
+        }    
 
         $gd = QS::gdVersion();
 
@@ -274,43 +274,43 @@ class QS {
         }
     }
 
-	function gdVersion() {
-		if (function_exists('exec') &&
+    function gdVersion() {
+        if (function_exists('exec') &&
             (DS == '/' || (DS == '\\' && MAGICK_PATH_FINAL != 'convert'))
         ) {
-			exec(MAGICK_PATH_FINAL . ' -version', $out);
+            exec(MAGICK_PATH_FINAL . ' -version', $out);
 
-			@$test = $out[0];
+            @$test = $out[0];
 
-			if (!empty($test) && strpos($test, ' not ') === false) {
-				$bits = explode(' ', $test);
-				$version = $bits[2];
+            if (!empty($test) && strpos($test, ' not ') === false) {
+                $bits = explode(' ', $test);
+                $version = $bits[2];
 
-				if (version_compare($version, '6.0.0', '>')) {
-					return 4;
-				} else {
-					return 3;
-				}
-			} else {
-				return QS::_gd();
-			}
-		} else {
-			return QS::_gd();
-		}
-	}
+                if (version_compare($version, '6.0.0', '>')) {
+                    return 4;
+                } else {
+                    return 3;
+                }
+            } else {
+                return QS::_gd();
+            }
+        } else {
+            return QS::_gd();
+        }
+    }
 
-	function _gd() {
-		if (function_exists('gd_info')) {
-			$gd = gd_info();
-			$version = preg_replace('/[[:alpha:][:space:]()]+/', '', $gd['GD Version']);
+    function _gd() {
+        if (function_exists('gd_info')) {
+            $gd = gd_info();
+            $version = preg_replace('/[[:alpha:][:space:]()]+/', '', $gd['GD Version']);
 
-			settype($version, 'integer');
+            settype($version, 'integer');
 
-			return $version;
-	 	} else {
-			return 0;
-		}
-	}
+            return $version;
+         } else {
+            return 0;
+        }
+    }
 
 /**
  * Get file extension.
@@ -318,16 +318,23 @@ class QS {
  * @param string $filename Name of the file.
  * @return string
  */
-	function findexts ($filename) {
-		$filename = strtolower($filename) ;
-		$exts = explode("[/\\.]", $filename) ;
-		$n = count($exts)-1;
-		$exts = $exts[$n];
+    function findexts ($filename) {
+        $filename = strtolower($filename) ;
+        $exts = explode("[/\\.]", $filename) ;
+        $n = count($exts)-1;
+        $exts = $exts[$n];
 
-		return $exts;
-	}
+        return $exts;
+    }
 
-    function movieThumb($movie_path){
+/**
+ * Return URL for the given video file
+ *
+ * @param string $movie_path full path to video file
+ */ 
+    function movieThumbUrl($movie_path) {
+        $p = func_get_args();
+        $movie_path = array_shift($p);
         $src = basename($movie_path);
         $pos = strrpos($src, '.');
         $clean = substr($src, 0, $pos);
@@ -335,28 +342,20 @@ class QS {
 
         if (count($custom)) {
             $filename = str_replace($src, '', $movie_path) . basename($custom[0]);
-        } else {
-            switch (strtolower(QS::findexts($src))) {
-                default:
-                    case 'swf"':
-                        $filename = str_replace($src, "", $movie_path)."../icons/default_swf.gif";
-                break;
 
-                case 'mov':
-                    $filename = str_replace($src, "", $movie_path)."../icons/default_mov.gif";
-                break;
-
-                case 'mp4':
-                    $filename = str_replace($src, "", $movie_path)."../icons/default_mp4.gif";
-                break;
-
-                case 'flv':
-                    $filename = str_replace($src, "", $movie_path)."../icons/default_flv.gif";
-                break;
-            }
+            return Router::url('/quick_slide/images/p/' . QS::p($filename, $p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6]), true);
         }
 
-        return $filename;
+        $icons = '/quick_slide/img/icons/';
+        $ext = strtolower(QS::findexts($src));
+
+        if (in_array($ext, array('swf', 'mov', 'mp4', 'flv'))) {
+            $filename = "{$icons}default_{$ext}.gif";
+        } else {
+            $filename = "{$icons}default_swf.gif";
+        }
+
+        return Router::url($filename, true);
     }
 
     function isVideo($fn) {
@@ -375,39 +374,39 @@ class QS {
  * Grab all files in a directory.
  *
  */
-	function directory($dir, $filters = 'all') {
-		if ($filters == 'accepted') { 
+    function directory($dir, $filters = 'all') {
+        if ($filters == 'accepted') { 
             $filters = 'jpg,JPG,JPEG,jpeg,gif,GIF,png,PNG,swf,SWF,flv,FLV';
         }
 
-		$handle = opendir($dir);
-		$files = array();
+        $handle = opendir($dir);
+        $files = array();
 
-		if ($filters == 'all') {
-			while (($file = readdir($handle))!==false) {
-				$files[] = $file;
-			}
-		}
+        if ($filters == 'all') {
+            while (($file = readdir($handle))!==false) {
+                $files[] = $file;
+            }
+        }
 
-		if ($filters != 'all') {
-			$filters = explode(",", $filters);
+        if ($filters != 'all') {
+            $filters = explode(",", $filters);
 
-			while (($file = readdir($handle)) !== false) {
-				for ($f=0; $f< sizeof($filters); $f++) {
-					$system = explode(".", $file);
-					$count = count($system);
+            while (($file = readdir($handle)) !== false) {
+                for ($f=0; $f< sizeof($filters); $f++) {
+                    $system = explode(".", $file);
+                    $count = count($system);
 
-					if ($system[$count-1] == $filters[$f]) {
-						$files[] = $file;
-					}
-				}
-			}
-		}
+                    if ($system[$count-1] == $filters[$f]) {
+                        $files[] = $file;
+                    }
+                }
+            }
+        }
 
-		closedir($handle);
+        closedir($handle);
 
         return $files;
-	}
+    }
 
 /**
  * Pic encoder
@@ -427,15 +426,15 @@ class QS {
  * @param string $pathname Folder path.
  * @param mixed $mode
  */
-	function rmkdir($pathname, $mode = 0777){
-		if (is_array($pathname)){
-			foreach ($pathname as $path){
-				QS::rmkdir($path, $mode);
-			}
-		} else {
-			is_dir(dirname($pathname)) || QS::rmkdir(dirname($pathname), $mode);
+    function rmkdir($pathname, $mode = 0777) {
+        if (is_array($pathname)) {
+            foreach ($pathname as $path) {
+                QS::rmkdir($path, $mode);
+            }
+        } else {
+            is_dir(dirname($pathname)) || QS::rmkdir(dirname($pathname), $mode);
 
-			return is_dir($pathname) || @mkdir($pathname, $mode);
-		}
-	}
+            return is_dir($pathname) || @mkdir($pathname, $mode);
+        }
+    }
 }

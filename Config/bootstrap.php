@@ -28,3 +28,20 @@
             "png"
         )
     );
+
+    Configure::write('qs_themes',
+        array(
+            'card' => 'Card',
+            'chrome' => 'Chrome',
+            'chromeless' => 'Chromeless',
+            'default' => 'Default',
+            'glass' => 'Glass',
+            'ice' => 'Ice',
+            'mist' => 'Mist',
+            'rain' => 'Rain',
+            'salt' => 'Salt',
+            'single-video' => 'Single Video',
+            'smooth' => 'Smooth',
+            'techno' => 'Techno'
+        )
+    );

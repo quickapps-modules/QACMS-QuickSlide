@@ -3,6 +3,11 @@ class InstallComponent extends Component {
     public $Installer;
 
     public function beforeInstall() {
+        if (!is_writable(ROOT . DS . 'webroot' . DS . 'files' . DS)) {
+            $this->Installer->error('`webroot/files` is not writable');
+            return false;
+        }
+
         $query = "
             CREATE TABLE IF NOT EXISTS `#__qs_albums` (
               `id` int(11) NOT NULL AUTO_INCREMENT,

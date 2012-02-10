@@ -14,40 +14,42 @@ class ImagesController extends QuickSlideAppController {
         parent::__construct($request, $response);
     }
 
-    public function video_thumb($video, $image){
+    public function admin_video_thumb($video, $image) {
         $image = $this->Image->findById($image);
         $video = $this->Image->findById($video);
         $aid = $image['Image']['aid'];
         $imageSrc = $image['Image']['src'];
         $videoSrc = $video['Image']['src'];
-        $newImageName = '___tn___' . (str_replace(".".QS::findexts($videoSrc), ".", $videoSrc)).QS::findexts($imageSrc);
-        $oldImageName = '___tn___' . (str_replace(".".QS::findexts($videoSrc), "*.", $videoSrc))."*";
-        $newImageTn = (str_replace(".".QS::findexts($imageSrc), "", $imageSrc))."*.".QS::findexts($imageSrc);
-        $leaving['lg'] = glob(QS_FOLDER . "album-{$aid}" . DS . $newImageName );
-        $leaving['olg'] = glob(QS_FOLDER . "album-{$aid}" . DS . $oldImageName );
+        $newImageName = '___tn___' . str_replace('.' . QS::findexts($videoSrc), '.', $videoSrc) . QS::findexts($imageSrc);
+        $oldImageName = '___tn___' . str_replace('.' . QS::findexts($videoSrc), '*.', $videoSrc) . '*';
+        $newImageTn = str_replace('.' . QS::findexts($imageSrc), '', $imageSrc) . '*.' . QS::findexts($imageSrc);
+        $leaving['lg'] = glob(QS_FOLDER . "album-{$aid}" . DS . $newImageName);
+        $leaving['olg'] = glob(QS_FOLDER . "album-{$aid}" . DS . $oldImageName);
         $leaving['tn'] = glob(QS_FOLDER . "album-{$aid}" . DS . 'cache' . DS . $oldImageName);
         $leaving['ntn'] = glob(QS_FOLDER . "album-{$aid}" . DS . 'cache' . DS . $newImageTn);
 
         foreach($leaving as $la) {
-            foreach ($la as $l){
+            foreach ($la as $l) {
                 @unlink($l);
             }
         }
 
-        rename(Configure::read('_UPLOAD_FOLDER').Configure::read('_APP.user_setup.uploadFolder')."/album-{$aid}/{$imageSrc}", Configure::read('_UPLOAD_FOLDER').Configure::read('_APP.user_setup.uploadFolder')."/album-{$aid}/{$newImageName}");
+        rename(QS_FOLDER . "album-{$aid}" . DS . $imageSrc, QS_FOLDER . "album-{$aid}" . DS . $newImageName);
 
-        if ( $imageSrc == $image['Album']['aTn'] ) {
+        if ($imageSrc == $image['Album']['aTn']) {
             $image['Album']['aTn'] = '';
-            Classregistry::init('Album')->save($image['Album']);
+            $this->Image->Album->save($image['Album']);
         }
+
+        die(' ');
     }
 
-    public function admin_rotate($ids, $deg){
+    public function admin_rotate($ids, $deg) {
         $ids = explode(",", $ids);
         $degree = $deg;
         $images = $this->Image->find('all', array('conditions' => array('Image.id' => $ids), 'recursive' => -1));
 
-        foreach ($images as $image){
+        foreach ($images as $image) {
             $path = QS_FOLDER . "album-{$image['Image']['aid']}" . DS;
             $leaving['tn'] = glob(QS_FOLDER . "album-{$image['Image']['aid']}" . DS . 'cache' . DS . str_replace("." . QS::findexts($image['Image']['src']), '', $image['Image']['src']) . "_*." . QS::findexts($image['Image']['src']));
 
@@ -75,7 +77,7 @@ class ImagesController extends QuickSlideAppController {
 
             $handle->Process($folder);
 
-            if ($handle->processed){
+            if ($handle->processed) {
                 if ($this->data['Upload']['type'] == 'image') {
                     $images_count = $this->Image->find('count', array('conditions' => "Image.aid = {$this->data['Album']['id']}"));
                     $data['Image'] = array(
@@ -116,7 +118,7 @@ class ImagesController extends QuickSlideAppController {
         $leaving[1] = glob($folder . $cache_thumb);
 
         foreach($leaving as $la) {
-            foreach ($la as $l){
+            foreach ($la as $l) {
                 unlink($l);
             }
         }
@@ -195,6 +197,13 @@ class ImagesController extends QuickSlideAppController {
         $args = !$args ? $this->request->query['i'] : $args;
         $specs = explode(',', base64_decode($args));
         $a[7] = isset($a[7]) ? trim($a[7]) : false;
+
+        if (isset($this->request->query['full'])) {
+            $full = explode(',', $this->request->query['full']);
+            $specs[1] = $full[0];
+            $specs[2] = $full[1];
+        }
+
         @QS::image_resize($specs[0], $specs[1], $specs[2], $specs[3], $specs[4], $specs[5], $specs[6], $specs[7]);
 
         die(' ');        
@@ -219,7 +228,7 @@ class ImagesController extends QuickSlideAppController {
         die(' ');
     }
 
-    public function admin_sort(){
+    public function admin_sort() {
         if (isset($this->params['data']['img'])) {
             foreach($this->params['data']['img'] as $i => $id) {
                 $data['Image'] = array('id' => $id, 'seq' => $i+1);

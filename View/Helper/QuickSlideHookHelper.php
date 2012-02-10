@@ -26,4 +26,13 @@ class QuickSlideHookHelper extends AppHelper {
 
         return $this->_View->Html->image($img, $options);
     }
+
+    public function qs_tooltip($label, $desc, $__d = true) {
+        if ($__d) {
+            $label = __d('quick_slide', $label);
+            $desc = __d('quick_slide', $desc);
+        }
+
+        return $label . ' ' . $this->_View->Html->link('[?]', '#', array('onclick' => 'return false;', 'title' => $desc));
+    }
 }

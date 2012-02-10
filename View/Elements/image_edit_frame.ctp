@@ -1,28 +1,50 @@
 <?php if (QS::isVideo($this->data['Image']['src'])): ?>
 
-    <div id="container" style="padding:2px;">
+    <div id="ss-player" style="padding:2px;">
         <a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.
     </div>
-
+    
     <script type="text/javascript">
-        var swf = new SWFObject('<?php echo $this->Html->url("/quick_slide/js/player.swf"); ?>', 'ply', '100%', '400', '9', '#FFFFFF');
-        swf.addParam('allowScriptAccess', 'always');
-        swf.addParam('wmode', 'transparent');
-        swf.addParam('flashvars','file=' + <?php echo $this->Html->url("/files/quick_slide/album-{$this->data['Image']['aid']}/{$this->data['Image']['src']}"); ?>);
-        swf.write("container");
+        var flashvars = {
+            file: "<?php echo $this->Html->url("/files/quick_slide/album-{$this->data['Image']['aid']}/{$this->data['Image']['src']}"); ?>",
+        };
+        var params = {
+            allowfullscreen: true
+        };
+        var attributes = { };
+
+        function init_players() {
+            swfobject.embedSWF(
+                "<?php echo $this->Html->url("/quick_slide/swf/player.swf"); ?>",
+                "ss-player",
+                "100%",
+                "400",
+                "9", false, flashvars, params, attributes);
+        }
     </script>
 
 <?php elseif (QS::isSwf($this->data['Image']['src'])): ?>
 
-    <div id="container" style="padding:2px;">
+    <div id="ss-player" style="padding:2px;">
         <a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.
     </div>
 
+    
     <script type="text/javascript">
-        var swf = new SWFObject('<?php echo $this->Html->url("/files/quick_slide/album-{$this->data['Image']['aid']}/{$this->data['Image']['src']}"); ?>', 'ply', '100%', '400', '9', '#FFFFFF');
-        swf.addParam('allowScriptAccess', 'always');
-        swf.addParam('wmode', 'transparent');
-        swf.write("container");
+        var flashvars = {};
+        var params = {
+            allowfullscreen: true
+        };
+        var attributes = { };
+
+        function init_players() {
+            swfobject.embedSWF(
+                "<?php echo $this->Html->url("/files/quick_slide/album-{$this->data['Image']['aid']}/{$this->data['Image']['src']}"); ?>",
+                "ss-player",
+                "100%",
+                "400",
+                "9", false, flashvars, params, attributes);
+        }
     </script>
 
 <?php else: ?>
@@ -53,12 +75,12 @@
 
 <script type="text/javascript">
 <?php
-	$anchor_coords = $this->data['Image']['anchor'];
+    $anchor_coords = $this->data['Image']['anchor'];
 
-	if (empty($anchor_coords)) {
-		$anchor_coords['x'] = $anchor_coords['y'] = 50; 
-	}
+    if (empty($anchor_coords)) {
+        $anchor_coords['x'] = $anchor_coords['y'] = 50; 
+    }
 ?>
-	anc_x = <?php echo $anchor_coords['x']; ?>;
-	anc_y = <?php echo $anchor_coords['y']; ?>;
+    anc_x = <?php echo $anchor_coords['x']; ?>;
+    anc_y = <?php echo $anchor_coords['y']; ?>;
 </script>

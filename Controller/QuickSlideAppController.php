@@ -4,7 +4,13 @@ App::import('Lib', 'QuickSlide.QS');
 class QuickSlideAppController extends AppController {
     public function beforeFilter() {
         if (defined('QS_NO_SWF')) {
-            $this->flashMsg(__d('quick_slide', 'QuickSlide Pro Player was not found.'), 'error', 'qs_no_swf');
+            $this->flashMsg(
+                __d('quick_slide',
+                    'SlideShow Pro Player was not found. <a href="%s">Click here</a> for more information.',
+                    Router::url('/admin/system/help/module/QuickSlide')
+                ), 
+                'error', 'qs_no_swf'
+            );
         }
 
         if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {

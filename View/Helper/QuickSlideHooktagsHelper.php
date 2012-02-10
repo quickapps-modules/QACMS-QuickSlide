@@ -1,22 +1,21 @@
 <?php
 class QuickSlideHooktagsHelper extends AppHelper {
-    public function quick_slide($atts, $content = null, $code = '') {
+    private $__count = 0;
+
+    public function quick_slide($attr, $content = null, $code = '') {
+        $out = '';
+
         if (!defined('QS_NO_SWF')) {
-            if (isset($atts['gallery'])) {
-                $atts['gallery'] = intval($atts['gallery']);
-                $xml = "/quick_slide/xml/data/gallery:{$atts['gallery']}"; 
-            } elseif (isset($atts['album'])) {
-                $atts['album'] = preg_replace('/[^0-9,]/', '', $atts['album']); 
-                $xml = "/quick_slide/xml/data/album:{$atts['album']}";
+            if (!$this->__count) {
+                $out .= $this->_View->Html->script('/quick_slide/js/swfobject.js');
             }
 
-            if (!empty($xml)) {
-                return Router::url($xml, true);
-            } else {
-                return '<!-- QuickSlide: No album/gallery parametter given -->';
-            }
+            $out .= $this->_View->element('QuickSlide.embed_code', compact('attr'));
+            $this->__count++;
         } else {
-            return '<!-- QuickSlide: QuickSlidePro Player (slideshowpro.swf) was not found -->';
+            $out = '<!-- QuickSlide: QuickSlidePro Player (slideshowpro.swf) was not found -->';
         }
+
+        return $out;
     }
 }

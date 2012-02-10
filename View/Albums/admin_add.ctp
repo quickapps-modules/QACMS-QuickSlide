@@ -3,9 +3,11 @@
         <?php
             echo $this->Form->input('Album.name',
                 array(
-                    'label' => __d('quick_slide', 'Album Title <a href="#" onClick="return false;" title="%s">[?]</a>',
-                        __d('quick_slide', 'This identifies this album within the management system, and also appears as your album title in the Slideshow Viewer.')
-                    )
+                    'label' => 
+                        $this->QuickSlideHook->qs_tooltip(
+                            'Album Title',
+                            'This identifies this album within the management system, and also appears as your album title in the SlideShow Player.'
+                        )
                 )
             );
         ?>

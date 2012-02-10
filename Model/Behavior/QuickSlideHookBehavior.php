@@ -5,8 +5,8 @@ class QuickSlideHookBehavior extends ModelBehavior {
             $results[] = array(
                 'NodeType' => array(
                     'id' => 'qs_create',
-                    'name' => __d('quick_slide', 'Image Album/Gallery'),
-                    'description' => __d('quick_slide', 'Creates a algum of images and galleries.')
+                    'name' => __d('quick_slide', 'Quick Slide Content'),
+                    'description' => __d('quick_slide', 'Creates rich media slideshows.')
                 )
             );
         }

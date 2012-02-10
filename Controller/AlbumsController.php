@@ -54,9 +54,11 @@ class AlbumsController extends QuickSlideAppController {
                     );
                 }
 
+                $this->Layout['javascripts']['file'][] = '/quick_slide/js/swfobject.js';
                 $this->Layout['javascripts']['file'][] = '/comment/js/jquery.scrollTo-min.js';
 
                 $this->JqueryUI->add('slider');
+                $this->JqueryUI->add('droppable');
                 $this->JqueryUI->add('draggable');
                 $this->JqueryUI->add('sortable');
 
@@ -76,6 +78,8 @@ class AlbumsController extends QuickSlideAppController {
                     if (!$this->data['Album']['status']) {
                         $this->flashMsg(__d('quick_slide', 'This album is inactive. Set its publish status to active to make it available to galleries.'), 'alert', 'album-off');
                     }
+
+                    $this->JqueryUI->add('dialog');
 
                     $view = 'edit_summary';
             break;

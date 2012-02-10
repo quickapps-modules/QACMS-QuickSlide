@@ -33,19 +33,19 @@
 <div style="width:49%; float:right;">
     <?php echo $this->Html->useTag('fieldsetstart', __d('quick_slide', 'Queue List')); ?>
          <script type="text/javascript">
-            function toggle_type(type){
+            function toggle_type(type) {
                 ext = new Array();
-                switch(type){
+                switch(type) {
                     case "images":
-                        ext[0]	= '<?php echo $exts; ?>';
-                        ext[1]	= '<?php echo __d('quick_slide', 'Images') ?>';
-                        ext[2]	= 'image';
+                        ext[0] = '<?php echo $exts; ?>';
+                        ext[1] = '<?php echo __d('quick_slide', 'Images') ?>';
+                        ext[2] = 'image';
                     break;
                     
                     case "audio":
-                        ext[0]	= '*.mp3;';
-                        ext[1]	= '<?php echo __d('quick_slide', 'Audio files') ?>';
-                        ext[2]	= 'audio';
+                        ext[0] = '*.mp3;';
+                        ext[1] = '<?php echo __d('quick_slide', 'Audio files') ?>';
+                        ext[2] = 'audio';
                     break;
                 }
                 swfu.setPostParams({'data[Album][id]' : <?php echo $this->data['Album']['id']; ?>, "data[Upload][type]" : ext[2] });
@@ -72,7 +72,7 @@
                     upload_error_handler: uploadError,
                     upload_success_handler: uploadSuccess,
                     upload_complete_handler: uploadComplete,
-                    queue_complete_handler: queueComplete,	// Queue plugin event
+                    queue_complete_handler: queueComplete, // Queue plugin event
 
                     flash_url: "<?php echo $this->Html->url("/quick_slide/js/swfupload/swfupload.swf"); ?>",
                     flash9_url: "<?php echo $this->Html->url("/quick_slide/js/swfupload/swfupload_fp9.swf"); ?>",

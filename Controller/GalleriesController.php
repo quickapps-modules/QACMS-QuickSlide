@@ -7,7 +7,7 @@ class GalleriesController extends QuickSlideAppController {
         $this->setCrumb(array(__d('quick_slide', 'Galleries'), '/admin/quick_slide/galleries'));
     }
 
-    public function admin_index(){
+    public function admin_index() {
         $conditions = isset($this->data['search']) ? array("Gallery.name LIKE '%{$this->data['search']}%'") : array();
 
         $this->data = $this->paginate('Gallery', $conditions);
@@ -15,7 +15,7 @@ class GalleriesController extends QuickSlideAppController {
     }
 
     public function admin_summary($id) {
-        if (isset($this->data['Gallery'])){
+        if (isset($this->data['Gallery'])) {
             if ($this->Gallery->save($this->data)) {
                 $this->flashMsg(__d('quick_slide', 'Gallery has been saved'));
                 $this->redirect($this->referer());
@@ -25,10 +25,9 @@ class GalleriesController extends QuickSlideAppController {
         }
 
         $this->data = $this->Gallery->find('first', array('conditions' => "Gallery.id = {$id}"));
-        $member_ids_arr = Set::extract("/Album/id", $this->data);
-        $ids = !empty($member_ids_arr) ? implode(', ', $member_ids_arr) : 0;
-        $non_members = $this->Album->find('all', array('conditions' => "Album.status = 1 AND Album.id NOT IN ({$ids})", 'order' => 'name', 'recursive' => -1));
-        $this->set('non_members', $non_members);
+
+        $this->JqueryUI->add('dialog');
+        $this->JqueryUI->theme();
         $this->title(__d('quick_slide', 'Gallery: %s', $this->data['Gallery']['name']));
     }
 
@@ -62,7 +61,7 @@ class GalleriesController extends QuickSlideAppController {
         $this->redirect($this->referer());
     }
 
-    public function admin_delete_link(){
+    public function admin_delete_link() {
         $this->data['Link']['display'] = $this->Link->find('count', array('conditions' => "Link.gid = {$this->data['Gallery']['id']}"))+1;
 
         $this->Link->delete($this->data['Link']['id']);
@@ -85,14 +84,14 @@ class GalleriesController extends QuickSlideAppController {
         $links = $this->Link->find('all', array('conditions' => "Link.gid = {$gid}", 'order' => 'Link.display ASC'));
         $i = 1;
 
-        foreach($links as  $link){
+        foreach($links as  $link) {
             $data['Link'] = array('id' => $link['Link']['id'], 'display' => $i);
             $this->Link->save($data);
             $i++;
         }
     }
 
-    public function admin_sort_albums(){
+    public function admin_sort_albums() {
         foreach ($this->data['albm'] as $i => $id) {
             $this->Link->save(array('id' => $id, 'display' => $i));
         }

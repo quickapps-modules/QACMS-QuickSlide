@@ -226,6 +226,7 @@ function clearClasses(class_name) {
 }
 
 function edit_image(id) {
+    $('#image_' + current_image_edit + ' .editBttns').fadeIn();
     clearClasses('current');
     $("#editImageContainer").load(
         QuickApps.settings.base_url + 'admin/quick_slide/images/edit/' + id,
@@ -234,6 +235,8 @@ function edit_image(id) {
             $('#image_' + id).addClass('current');
             $('#image_' + id + ' .editBttns').fadeOut();
             $.scrollTo('#edit-box', 800);
+
+            try { init_players(); } catch(e) {}
         }
     );  
 }
@@ -528,41 +531,38 @@ function mass_delete_exe() {
     });
 }
 
-// Asignacion de Thumbnails a Videos
 var dropArgs = new Array;
 
 function images_droppables() {
     var drops = $('div.video');
     if (drops.length > 0) {
-        drops.each(function (d) {
-            var elem = $(d).getElementsByTagName('img')[0];
-            Droppables.add(elem, {
-                accept: 'image',
-                hoverclass: 'drop_target',
-                onDrop: function (dropped, element) {
+        drops.each(function () {
+            $(this).droppable({
+                activeClass: 'image-drop-highlight',
+                drop: function(event, ui) {
                     dropArgs = [];
-                    dropArgs = [element, dropped];
-                    Messaging.confirm(QuickApps.__t("Do you want to use this image as this video's preview image?"), 'finish_drop()');
-                }
-            });
-        });
+                    dropArgs = [$(this), ui.draggable];
+                    var c = confirm(QuickApps.__t("Do you want to use this image as this video's preview image?"));
 
+                    if (c) {
+                        finish_drop();
+                    }
+                }
+            });           
+        });
     }
 }
 
 function finish_drop() {
-    Messaging.hello(QuickApps.__t('Assigning thumb to video...'), 1, false);
-    var target = dropArgs[0].id.split("_")[1];
-    var dropped = dropArgs[1].id.split("_")[1];
+    var video = dropArgs[0].attr('id').split("_")[1]; // video
+    var image = dropArgs[1].attr('id').split("_")[1]; // image
 
-    var myAjax = new Ajax.Request(QuickApps.settings.base_url + 'quick_slide/images/video_thumb/' + target + '/' + dropped, {
-        method: 'get',
-        onComplete: function () {
-            delete_image(dropped);
-            $(dropArgs[0]).src = $(dropArgs[1]).getElementsByTagName('IMG')[0].src;
-            $(dropArgs[0]).parentNode.getElementsByTagName('IMG')[1].show();
-            Messaging.hello(QuickApps.__t('Assigning thumb to video...done'), 2, false);
-            window.setTimeout("Messaging.kill('')", 2000);
+    $.ajax({
+        type: 'GET',
+        url: QuickApps.settings.base_url + 'admin/quick_slide/images/video_thumb/' + video + '/' + image,
+        success: function(data) {
+            delete_image_exe(image);
+            $('#drop_' + video).attr('src', $('#drop_' + image).attr('src'));
         }
     });
 }
@@ -669,6 +669,67 @@ function images_scale_slider() {
             min: 0
         }
     );
+}
+
+// TODO:
+function preview_embed_code() {
+    
+}
+
+function generate_embed_code() {
+    var type = QuickApps.settings.url.match(/\/albums\//gi) ? 'album' : 'gallery'; 
+    var id = type == 'album' ? $('#AlbumId').val() : $('#GalleryId').val();
+    var code = '';
+
+    code += '[quick_slide ';
+        code += 'id=' + type + '-' + id +  '\n';
+
+        if (!isNaN($('#EmbedWidth').val()) && !isNaN($('#EmbedHeight').val())) {
+            code += 'width=' + $('#EmbedWidth').val() +  '\n';
+            code += 'height=' + $('#EmbedHeight').val() + '\n';
+        }
+
+        code += 'theme=' + $('#EmbedTheme').val() + '\n';
+        code += 'content_scale="' + $('#EmbedContentScale').val() + '"\n';
+        code += 'transition_style="' + $('#EmbedTransitionStyle').val() + '"\n';
+        code += 'feedback_preloader_appearance="' + $('#EmbedFeedbackPreloaderAppearance').val() + '"\n';
+        
+        if (!$('#EmbedDisplayMode').is(':checked')) {
+            code += 'display_mode="Manual"' + '\n';
+        }
+
+        if ($('#EmbedStartup').is(':checked')) {
+            code += 'startup="Open Gallery"' + '\n';
+        }
+
+        if ($('#EmbedPanZoom').is(':checked')) {
+            code += 'pan_zoom="On"' + '\n';
+        }
+
+        if (!$('#EmbedVideoAutoStart').is(':checked')) {
+            code += 'video_auto_start="Off"' + '\n';
+        }
+
+        if ($('#EmbedNavAppearance').is(':checked')) {
+            code += 'nav_appearance="Visible on Rollover"' + '\n';
+        }
+
+        if (!$('#EmbedNavLinkAppearance').is(':checked')) {
+            code += 'nav_link_appearance="Numbers"' + '\n';
+        }
+
+    code += ' /]';
+
+    $('#embed-code-render .code-content').html(code);
+    $('#embed-code-render').dialog({
+        minWidth:480,
+        maxWidth:480,
+        width:480,
+        draggable: true,
+        modal:true
+    });
+
+    save_embed_cookie();
 }
 
 function images_sortable() {

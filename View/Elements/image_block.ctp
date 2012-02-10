@@ -2,7 +2,6 @@
 $imageFolder = QS_FOLDER . "album-{$album['id']}" . DS;
 
 if (QS::isImg($image['src'])) {
-    $video_thumb = false;
     $arr = $image['anchor'];
 
     if (empty($arr)) {
@@ -10,22 +9,11 @@ if (QS::isImg($image['src'])) {
     }
 
     $path = "{$imageFolder}{$image['src']}";
-    $img_url = $this->Html->url("/quick_slide/images/p/"). QS::p($path, 172, 132, 70, 1, $arr['x'], $arr['y'], 0);
+    $img_url = $this->Html->url('/quick_slide/images/p/'). QS::p($path, 172, 132, 80, 1, $arr['x'], $arr['y'], 0);
 } else {
     # Check for video thumb
-    $pos = strrpos($image['src'], '.');
-    $clean = substr($image['src'], 0, $pos);
-    $custom = glob("{$imageFolder}___tn___" . $clean . '.*');
-    $video_thumb = true;
-    $img_url = $this->Html->url("/quick_slide/images/p/") . QS::p(QS::movieThumb("{$imageFolder}{$image['src']}"), 172, 132, 70, 0, 0, 0, 0);
+    $img_url = QS::movieThumbUrl("{$imageFolder}{$image['src']}", 172, 132, 80, 0, 0, 0, 0);
 }
-
-$images[] = compact(
-    'img',
-    'aTn',
-    'img_url',
-    'video_thumb'
-);
 ?>
 
 <div id="image_<?php echo $image['id']; ?>" class="image-block <?php echo $image['status'] == 1 ? "active " : "inactive "; ?><?php echo QS::isImg($image['src']) ? "image " : "video "; ?>">
@@ -34,7 +22,7 @@ $images[] = compact(
     <a onclick="return false;" class="img-container">
         <div class="scale-image">
             <img id="drop_<?php echo $image['id']; ?>" src="<?php echo $img_url; ?>" width="100%" border="0" onMouseDown="image_select(<?php echo $image['id']; ?>);" />
-            <img src="<?php echo $this->Html->url("/quick_slide/img/vid_overlay.gif"); ?>" class="video-overlay" width="15" height="15" border="0" <?php echo !$video_thumb ? 'style="display:none;"' : ''; ?> />
+            <img src="<?php echo $this->Html->url("/quick_slide/img/vid_overlay.gif"); ?>" class="video-overlay" width="15" height="15" border="0" <?php echo QS::isImg($image['src']) ? 'style="display:none;"' : ''; ?> />
         </div>
     </a>
 

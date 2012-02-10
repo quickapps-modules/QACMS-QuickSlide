@@ -1,6 +1,6 @@
 <?php
 class XmlController extends QuickSlideAppController {
-	public $uses = array('QuickSlide.Gallery', 'QuickSlide.Link');
+    public $uses = array('QuickSlide.Gallery', 'QuickSlide.Link');
 
     public function beforeFilter() {
         $this->Auth->allow('data');
@@ -8,8 +8,8 @@ class XmlController extends QuickSlideAppController {
         parent::beforeFilter();
     }
 
-	public function data() {
-		$this->layout = 'xml/default';
+    public function data() {
+        $this->viewClass = 'Xml';
         $gallery = $albums = array();
 
         if (isset($this->params['named']['gallery'])) {
@@ -35,7 +35,7 @@ class XmlController extends QuickSlideAppController {
             $album = $this->params['named']['album'];
             $album = preg_replace('/[^0-9,]/', '', $album);
             $album = explode(',', $album);
-			$albums = $this->Gallery->Album->find('all',
+            $albums = $this->Gallery->Album->find('all',
                 array(
                     'conditions' => array('Album.id' => $album),
                     'recursive' => 1

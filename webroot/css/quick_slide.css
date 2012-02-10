@@ -2,6 +2,9 @@ div.album-thumb-img {margin:1px 0 0 1px; width:46px; height:35px; overflow:hidde
 div.ss-frame { float:left; width:100%; }
 img.album-tn { border:1px solid #303030; }
 .add-albums-btn { float:right; }
+ul.gallery-albums li { display:block; overflow:hidden; border-bottom:1px solid #C5C5C5; padding:5px 0; }
+ul.gallery-albums li img { float:left; margin-right:8px; }
+.image-drop-highlight { background:#E3E0E0; }
 
 /**
  * Albums list (add to gallery)
@@ -62,7 +65,7 @@ div.inactive { opacity:0.4; filter:alpha(opacity:40); }
 div.active { opacity:1.0; filter:alpha(opacity:100); }
 div.editBttns { display:block; margin:0 auto; }
 img.drop_target {opacity:0.20; filter:alpha(opacity:20); }
-img.video-overlay { position:absolute; top:0px; left:0; margin:0; background:#fff; border:0; }
+img.video-overlay { top:0px; left:0; margin:0; background:#fff; border:0; }
 
 /**
  * Edit images

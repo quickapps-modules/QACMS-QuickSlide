@@ -16,4 +16,4 @@
         <a title="<?php __d('quick_slide', "Activate"); ?>" class="inactive-image-btn" href="" onClick="mass_deactivate(1); return false;"></a>
         <a title="<?php __d('quick_slide', "Delete"); ?>" class="delete-image-btn" href="" onClick="mass_delete(); return false;"></a>
     </div>
-</div>		
+</div>

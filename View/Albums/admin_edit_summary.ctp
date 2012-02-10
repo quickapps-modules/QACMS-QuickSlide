@@ -1,42 +1,24 @@
 <div style="width:49%; float:left;">
     <?php echo $this->Form->create('Album'); ?>
-        <?php echo $this->Html->useTag('fieldsetstart', __d('quick_slide', 'Title & Description')); ?>
+        <div align="right">
+            <?php echo $this->Form->submit(__d('quick_slide', 'Update Album')); ?>
+        </div>
+
+        <?php echo $this->Html->useTag('fieldsetstart', __d('quick_slide', 'Album Information')); ?>
             <?php echo $this->Form->hidden('Album.id'); ?>
             <?php
                 echo $this->Form->input('Album.name',
                     array(
                         'label' => 
-                            __d('quick_slide', 'Album Title') . ' ' .
-                            $this->Html->link('[?]', '#',
-                                array(
-                                    'title' => __d('quick_slide', 'This identifies this album within the management system, and also appears as your album title in the Slideshow Viewer.')
-                                )
+                            $this->QuickSlideHook->qs_tooltip(
+                                'Album Title',
+                                'This identifies this album within the management system, and also appears as your album title in the SlideShow Player.'
                             )
                     )
                 );
             ?>
 
             <?php
-                echo $this->Form->input('Album.status',
-                    array(
-                        'type' => 'radio',
-                        'options' => array(
-                            0 => __d('quick_slide', 'Unpublished'),
-                            1 => __d('quick_slide', 'Published')
-                        ),
-                        'separator' => '&nbsp; | &nbsp;',
-                        'legend' => 
-                            __d('quick_slide', 'Publish Status') . ' ' .
-                            $this->Html->link('[?]', '#',
-                                array(
-                                    'title' => __d('quick_slide', 'Controls whether this album is available for publication. `Inactive` will keep this album from appearing in a gallery. `Active` will make this album available for inclusion in a gallery.')
-                                )
-                            )
-                    )
-                );
-            ?>
-
-            <?php 
                 echo $this->Form->input('Album.description',
                     array(
                         'type' => 'textarea',
@@ -44,8 +26,30 @@
                     )
                 );
             ?>
+        <?php echo $this->Html->useTag('fieldsetend'); ?>
 
-            <?php echo $this->Form->submit(__d('quick_slide', 'Update Album')); ?>
+        <?php echo $this->Html->useTag('fieldsetstart', __d('quick_slide', 'Publishing')); ?>
+            <?php
+                echo $this->Form->input('Album.status',
+                    array(
+                        'type' => 'select',
+                        'options' => array(
+                            0 => __d('quick_slide', 'Inactive'),
+                            1 => __d('quick_slide', 'Active')
+                        ),
+                        'label' => 
+                            $this->QuickSlideHook->qs_tooltip(
+                                'Status',
+                                'Controls whether this album is available for publication. `Inactive` will keep this album from appearing in a gallery. `Active` will make this album available for inclusion in a gallery.'
+                            )
+                    )
+                );
+            ?>
+
+            <?php echo $this->Form->label('Album.XmlFilepath', __d('quick_slide', 'XML file path')); ?>            
+            <em><?php echo $this->Html->url("/quick_slide/xml/data/album:{$this->data['Album']['id']}", true); ?></em>
+
+            <p><?php echo $this->Form->submit(__d('quick_slide', 'Embed Code'), array('onclick' => 'return false;', 'id' => 'EmbedCodeBtn')); ?></p>
         <?php echo $this->Html->useTag('fieldsetend'); ?>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -66,11 +70,9 @@
 
     <?php 
         echo $this->Html->useTag('fieldsetstart',
-            __d('quick_slide', 'Galleries added to') . ' ' .
-            $this->Html->link('[?]', '#',
-                array(
-                    'title' => __d('quick_slide', 'The following galleries contain this album. To remove this album from a gallery click on a gallery title.')
-                )
+            $this->QuickSlideHook->qs_tooltip(
+                'Galleries added to',
+                'The following galleries contain this album. To remove this album from a gallery click on a gallery title.'
             )
         );
     ?>
@@ -81,7 +83,9 @@
             <?php endforeach; ?>
             </ul>
         <?php else: ?>
-            <?php echo ($this->data['Album']['status']) ? __d('quick_slide', "This album has not been included on galleries.") : __d('quick_slide', 'This album is inactive and is not a part of any galleries.'); ?>
+            <?php echo ($this->data['Album']['status']) ? __d('quick_slide', 'This album has not been included on galleries.') : __d('quick_slide', 'This album is inactive and is not a part of any galleries.'); ?>
         <?php endif; ?>
     <?php echo $this->Html->useTag('fieldsetend'); ?>
 </div>
+
+<?php echo $this->element('embed_code_generator'); ?>
