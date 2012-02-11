@@ -238,7 +238,7 @@ function edit_image(id) {
 
             try { init_players(); } catch(e) {}
         }
-    );  
+    );
 }
 
 function prev_image() {
@@ -548,7 +548,7 @@ function images_droppables() {
                         finish_drop();
                     }
                 }
-            });           
+            });
         });
     }
 }
@@ -605,7 +605,7 @@ function delete_audio_exe() {
         url: QuickApps.settings.base_url + 'admin/quick_slide/audio/delete/',
         success: function(data) {
             form_message('#delete-audio-messenger', QuickApps.__t('Deleting audio file...done'));
-            $("#AlbumAudioFile").find("option[value='" + $('#AlbumAudioFile').val() + "']").remove(); 
+            $("#AlbumAudioFile").find("option[value='" + $('#AlbumAudioFile').val() + "']").remove();
         }
     });
 }
@@ -671,13 +671,60 @@ function images_scale_slider() {
     );
 }
 
-// TODO:
 function preview_embed_code() {
-    
+    var type = QuickApps.settings.url.match(/\/albums\//gi) ? 'album' : 'gallery';
+    var id = type == 'album' ? $('#AlbumId').val() : $('#GalleryId').val();
+    var base_url = (QuickApps.settings.domain.replace(/\/$/, '') + QuickApps.settings.base_url).replace('/' + QuickApps.settings.locale.code + '/', '/');
+
+    var flashvars = {
+        xmlFilePath: base_url + 'quick_slide/xml/data/' + type + ':' + id + '/?nc=' + Math.random(),
+    };
+
+    flashvars.paramXMLPath = base_url + 'quick_slide/themes/' + $('#EmbedTheme').val() + '.xml';
+    flashvars.contentScale = $('#EmbedContentScale').val();
+    flashvars.transitionStyle = $('#EmbedTransitionStyle').val();
+    flashvars.feedbackPreloaderAppearance = $('#EmbedFeedbackPreloaderAppearance').val();
+
+    if (!$('#EmbedDisplayMode').is(':checked')) {
+        flashvars.displayMode = "Manual";
+    }
+
+    if ($('#EmbedStartup').is(':checked')) {
+        flashvars.startup = "Open Gallery";
+    }
+
+    if ($('#EmbedPanZoom').is(':checked')) {
+        flashvars.panZoom = "On";
+    }
+
+    if (!$('#EmbedVideoAutoStart').is(':checked')) {
+        flashvars.videoAutoStart = "Off";
+    }
+
+    if ($('#EmbedNavAppearance').is(':checked')) {
+        flashvars.navAppearance = "Visible on Rollover";
+    }
+
+    if (!$('#EmbedNavLinkAppearance').is(':checked')) {
+        flashvars.navLinkAppearance = "Numbers";
+    }
+
+    var params = {
+        allowfullscreen: true
+    };
+
+    var attributes = { };
+
+    swfobject.embedSWF(
+        base_url + 'files/quick_slide/slideshowpro.swf',
+        'embed-preview',
+        '480',
+        '350',
+        '10', false, flashvars, params, attributes);
 }
 
 function generate_embed_code() {
-    var type = QuickApps.settings.url.match(/\/albums\//gi) ? 'album' : 'gallery'; 
+    var type = QuickApps.settings.url.match(/\/albums\//gi) ? 'album' : 'gallery';
     var id = type == 'album' ? $('#AlbumId').val() : $('#GalleryId').val();
     var code = '';
 
@@ -693,7 +740,7 @@ function generate_embed_code() {
         code += 'content_scale="' + $('#EmbedContentScale').val() + '"\n';
         code += 'transition_style="' + $('#EmbedTransitionStyle').val() + '"\n';
         code += 'feedback_preloader_appearance="' + $('#EmbedFeedbackPreloaderAppearance').val() + '"\n';
-        
+
         if (!$('#EmbedDisplayMode').is(':checked')) {
             code += 'display_mode="Manual"' + '\n';
         }

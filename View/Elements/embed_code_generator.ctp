@@ -81,20 +81,20 @@
                             <?php echo $this->Form->input('Embed.navLinkAppearance', array('label' => __d('quick_slide', 'Thumbnail links'), 'type' => 'checkbox')); ?>
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td align="left"><?php echo $this->Form->submit(__d('quick_slide', 'Generate Hooktag Code'), array('onclick' => 'generate_embed_code(); return false;')); ?></td>
                         <td align="right"><?php echo $this->Form->submit(__d('quick_slide', 'Preview'), array('onclick' => 'preview_embed_code(); return false;')); ?></td>
                     </tr>
                 </table>
             </div>
-            
-            <div id="embed-preview" style="width:480px; height:350px; float:right; margin-right:15px">
-                <?php if(defined('QS_NO_SWF')): ?>
-                    <!-- TODO Preview -->
-                <?php else: ?>
-                    <?php echo __d('quick_slide', 'SlideShow Pro Player not found. Preview not available.'); ?>
-                <?php endif; ?>
+
+            <div style="width:480px; height:350px; float:right; margin-right:15px;">
+                <div id="embed-preview">
+                    <?php if(defined('QS_NO_SWF')): ?>
+                        <?php echo __d('quick_slide', 'SlideShow Pro Player not found. Preview not available.'); ?>
+                    <?php endif; ?>
+                </div>
             </div>
         <?php echo $this->Html->useTag('fieldsetend'); ?>
     <?php echo $this->Form->end(); ?>
