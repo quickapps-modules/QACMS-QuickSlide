@@ -91,7 +91,7 @@ class ImagesController extends QuickSlideAppController {
                     $adata['Album'] = array('id' => $this->data['Album']['id']);
                     $this->Image->Album->save($adata); // auto modified,updated_by
 
-                    header("HTTP/1.1 200 OK");                    
+                    header("HTTP/1.1 200 OK");
                     die(' ');
                 }
             } else {
@@ -161,7 +161,7 @@ class ImagesController extends QuickSlideAppController {
             $this->Image->save($this->data);
             die(' ');
         }
-        
+
         $data = $this->Image->find('first', array('conditions' => array('Image.id' => $id)));
 
         if ($data['Image']['status'] == 0 &&
@@ -181,7 +181,7 @@ class ImagesController extends QuickSlideAppController {
 
 /**
  * Render encoded image request.
- * 
+ *
  * @param string $args Encoded image request:
  *  $args[0] Full path to image
  *  $args[1] New width
@@ -192,7 +192,7 @@ class ImagesController extends QuickSlideAppController {
  *  $args[6] Anchor Y coord
  *
  * @return die
- */ 
+ */
     public function p($args = false) {
         $args = !$args ? $this->request->query['i'] : $args;
         $specs = explode(',', base64_decode($args));
@@ -206,7 +206,7 @@ class ImagesController extends QuickSlideAppController {
 
         @QS::image_resize($specs[0], $specs[1], $specs[2], $specs[3], $specs[4], $specs[5], $specs[6], $specs[7]);
 
-        die(' ');        
+        die(' ');
     }
 
     public function admin_delete($ids) {
@@ -216,7 +216,7 @@ class ImagesController extends QuickSlideAppController {
         foreach ($ids as $id) {
             $this->Image->delete($id);
         }
-        
+
         die(' ');
     }
 
@@ -224,7 +224,7 @@ class ImagesController extends QuickSlideAppController {
         $ids = explode(",", $ids);
         $data = array('Image.status' => $this->data['Image']['status']);
         $this->Image->updateAll($data, array('Image.id' => $ids));
-        
+
         die(' ');
     }
 

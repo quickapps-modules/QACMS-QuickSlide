@@ -4,13 +4,13 @@
             <?php echo $this->Form->hidden('Album.id'); ?>
 
             <?php if (count($mp3) > 1): ?>
-                <?php 
+                <?php
                     echo $this->Form->input('Album.audio_file',
                         array(
                             'label' => __d('quick_slide', 'Select an audio file'),
                             'type' => 'select',
                             'options' => $mp3,
-                            'after' => 
+                            'after' =>
                                 '&nbsp;&nbsp;' .
                                 $this->Html->link(
                                     $this->Html->image('/quick_slide/img/delete_ico.gif', array('border' => 0)),
@@ -26,12 +26,12 @@
             <?php endif; ?>
 
             <?php echo $this->Form->input('Album.audio_caption', array('type' => 'textarea', 'label' => __d('quick_slide', 'Audio caption'))); ?>
-            
+
             <p>
-                <b><?php echo __d('quick_slide', 'Note'); ?></b>: 
+                <b><?php echo __d('quick_slide', 'Note'); ?></b>:
                 <?php echo __d('quick_slide', 'For songs to show up in the drop-down above, they must be uploaded to the album-audio folder. This can be done via FTP or the Upload tab.'); ?>
             </p>
-            
+
             <?php echo $this->Form->submit(__d('quick_slide', 'Save changes')); ?>
         <?php echo $this->Html->useTag('fieldsetend'); ?>
     <?php echo $this->Form->end(); ?>

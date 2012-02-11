@@ -41,7 +41,6 @@
         <p>
             <h4>Example</h4>
             The following hooktag code will render a SWF Player for the album with an <b>ID equal to 1</b>. Player's dimmensions are <b>600x400</b> and will use the <b>chrome</b> theme.
-            
         </p>
         <pre>
             [quick_slide

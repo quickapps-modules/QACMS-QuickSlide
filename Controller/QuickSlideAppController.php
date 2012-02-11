@@ -8,7 +8,7 @@ class QuickSlideAppController extends AppController {
                 __d('quick_slide',
                     'SlideShow Pro Player was not found. <a href="%s">Click here</a> for more information.',
                     Router::url('/admin/system/help/module/QuickSlide')
-                ), 
+                ),
                 'error', 'qs_no_swf'
             );
         }

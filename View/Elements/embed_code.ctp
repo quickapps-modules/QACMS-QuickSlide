@@ -4,12 +4,12 @@
         $e = explode('-', $attr['id']);
         $type = @strtolower($e[0]);
         $id = @intval($e[1]);
-        
+
         switch ($type) {
             case 'album':
                $attr['xml_file_path'] .= 'album:' . $id;
             break;
-            
+
             case 'gallery':
                 default:
                     $attr['xml_file_path'] .= 'gallery:' . $id;

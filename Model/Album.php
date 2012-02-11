@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Album extends QuickSlideAppModel {
     public $useTable = 'qs_albums';
 
@@ -10,7 +10,7 @@ class Album extends QuickSlideAppModel {
             'dependent' => true
        )
     );
-    
+
     public $belongsTo = array(
         'CreatedBy' => array(
             'className' => 'User',
@@ -23,8 +23,8 @@ class Album extends QuickSlideAppModel {
             'fields' => array('id', 'name')
        )
     );
-    
-    
+
+
     public $hasAndBelongsToMany = array(
         'Gallery' => array(
             'className' => 'QuickSlide.Gallery',
@@ -34,7 +34,7 @@ class Album extends QuickSlideAppModel {
             'fields' => array('id', 'name')
        )
     );
-    
+
     public $validate = array(
         'name' => array(
             'rule' => 'notEmpty',

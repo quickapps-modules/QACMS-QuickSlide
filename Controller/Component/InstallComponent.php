@@ -26,7 +26,7 @@ class InstallComponent extends Component {
               `created_by` int(11) NOT NULL,
               `status` tinyint(1) NOT NULL DEFAULT '0',
               PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;     
+            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
             CREATE TABLE IF NOT EXISTS `#__qs_galleries` (
               `id` int(11) NOT NULL AUTO_INCREMENT,
               `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -68,7 +68,7 @@ class InstallComponent extends Component {
             ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
         ";
 
-        return $this->Installer->sql($query);    
+        return $this->Installer->sql($query);
     }
 
     public function afterInstall() {

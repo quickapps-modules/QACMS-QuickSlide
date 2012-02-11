@@ -1,4 +1,4 @@
-<?php 
+<?php
 class GalleriesController extends QuickSlideAppController {
     public $uses = array('QuickSlide.Gallery', 'QuickSlide.Album', 'QuickSlide.Link');
 
@@ -107,7 +107,7 @@ class GalleriesController extends QuickSlideAppController {
                 $this->flashMsg(__d('quick_slide', 'Gallery could not be saved'));
             }
         }
-        
+
         $this->title(__d('quick_slide', 'New Gallery'));
     }
 }

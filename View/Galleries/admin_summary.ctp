@@ -14,7 +14,7 @@
                     )
                 );
             ?>
-            <?php 
+            <?php
                 echo $this->Form->input('Gallery.description',
                     array(
                         'type' => 'textarea',
@@ -25,12 +25,12 @@
                             )
                     )
                 );
-            ?>  
+            ?>
             <?php echo $this->Form->submit(__d('quick_slide', 'Update Gallery')); ?>
         <?php echo $this->Html->useTag('fieldsetend'); ?>
 
         <?php echo $this->Html->useTag('fieldsetstart', __d('quick_slide', 'Publishing')); ?>
-            <?php echo $this->Form->label('Gallery.XmlFilepath', __d('quick_slide', 'XML file path')); ?>            
+            <?php echo $this->Form->label('Gallery.XmlFilepath', __d('quick_slide', 'XML file path')); ?>
             <em><?php echo $this->Html->url("/quick_slide/xml/data/gallery:{$this->data['Gallery']['id']}", true); ?></em>
 
             <p><?php echo $this->Form->submit(__d('quick_slide', 'Embed Code'), array('onclick' => 'return false;', 'id' => 'EmbedCodeBtn')); ?></p>

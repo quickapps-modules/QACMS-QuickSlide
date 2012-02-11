@@ -7,7 +7,7 @@
 
 <div id="multi-select" style="display:none;">
     <div class="fl">
-        <b><span id="multi-count"></span></b> 
+        <b><span id="multi-count"></span></b>
         <?php echo __d('quick_slide', 'items selected'); ?> / <b><?php echo __d('quick_slide', 'Actions'); ?>: </b>
     </div>
 

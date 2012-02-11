@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Image extends QuickSlideAppModel {
     public $useTable = 'qs_images';
     public $order = array('ABS(Image.seq) ASC');
@@ -39,7 +39,7 @@ class Image extends QuickSlideAppModel {
                 @unlink($cache);
             }
         }
-    }    
+    }
 
     public function beforeDelete() {
         $this->cacheQueries = false;

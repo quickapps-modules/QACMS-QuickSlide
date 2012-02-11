@@ -1,4 +1,4 @@
-<?php 
+<?php
 class AudioController extends QuickSlideAppController {
     public $uses = array('QuickSlide.Album');
 

@@ -3,7 +3,7 @@
     <div id="ss-player" style="padding:2px;">
         <a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.
     </div>
-    
+
     <script type="text/javascript">
         var flashvars = {
             file: "<?php echo $this->Html->url("/files/quick_slide/album-{$this->data['Image']['aid']}/{$this->data['Image']['src']}"); ?>",
@@ -29,7 +29,7 @@
         <a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.
     </div>
 
-    
+
     <script type="text/javascript">
         var flashvars = {};
         var params = {
@@ -58,7 +58,7 @@
             <?php echo $this->Html->image('/quick_slide/img/focal_point.png', array('id' => 'anchor', 'style' => 'display:none;')); ?>
             <img id="img_edit" src="<?php echo $this->Html->url('/quick_slide/images/p/' . QS::p($path, 600, 400, 70, 0, 0, 0, 0)); ?>" border="0" class="<?php echo $info[0] >= $info[1] ? 'wide' : 'tall'; ?>" />
         </div>
-        
+
         <div class="edit-buttons">
             <a href="#" title="<?php echo __d('quick_slide', 'Change Focal Point'); ?>" class="icon fp" onclick="toggleAnchor(); return false;"></a>
         </div>
@@ -78,7 +78,7 @@
     $anchor_coords = $this->data['Image']['anchor'];
 
     if (empty($anchor_coords)) {
-        $anchor_coords['x'] = $anchor_coords['y'] = 50; 
+        $anchor_coords['x'] = $anchor_coords['y'] = 50;
     }
 ?>
     anc_x = <?php echo $anchor_coords['x']; ?>;

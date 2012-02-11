@@ -1,7 +1,7 @@
-<?php 
+<?php
 class AlbumsController extends QuickSlideAppController {
     public $uses = array('QuickSlide.Album', 'QuickSlide.Link');
-    
+
     public function beforeFilter() {
         parent::beforeFilter();
 
@@ -47,7 +47,7 @@ class AlbumsController extends QuickSlideAppController {
                 if (!count($this->data['Image'])) {
                     $this->flashMsg(
                         __d('quick_slide', 'This album is empty.') .
-                        ' <a href="' . Router::url("/admin/quick_slide/albums/edit/{$this->data['Album']['id']}/upload") . '">' . 
+                        ' <a href="' . Router::url("/admin/quick_slide/albums/edit/{$this->data['Album']['id']}/upload") . '">' .
                             __d('quick_slide', 'Click here for upload contents') .
                         '</a>',
                         'alert'
@@ -81,6 +81,7 @@ class AlbumsController extends QuickSlideAppController {
 
                     $this->JqueryUI->add('dialog');
 
+                    $this->Layout['javascripts']['file'][] = '/quick_slide/js/swfobject.js';
                     $view = 'edit_summary';
             break;
         }
@@ -155,6 +156,6 @@ class AlbumsController extends QuickSlideAppController {
             echo "<ul>\n<li>No se encontraron coincidencias</li>\n</ul>\n";
         }
 
-        die();    
+        die();  
     }
 }

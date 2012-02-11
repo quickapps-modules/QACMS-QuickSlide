@@ -20,7 +20,7 @@
             <?php echo $this->Form->hidden('Album.id'); ?>
             <?php echo $this->Form->input('Image.title', array('type' => 'text', 'label' => __d('quick_slide', 'Title'))); ?>
             <?php echo $this->Form->input('Image.author', array('type' => 'text', 'label' => __d('quick_slide', 'Author'))); ?>
-            <?php echo $this->Form->input('Image.link', array('type' => 'text', 'label' => __d('quick_slide', 'URL'))); ?>
+            <?php echo $this->Form->input('Image.link', array('type' => 'text', 'label' => __d('quick_slide', ''))); ?>
             <?php echo $this->Form->input('Image.target', array('type' => 'checkbox', 'label' => __d('quick_slide', 'Open link in same browser window.'))); ?>
             <?php
                 if (QS::isImg($this->data['Image']['src'])) {

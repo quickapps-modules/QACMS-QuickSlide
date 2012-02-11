@@ -9,7 +9,7 @@
                     <?php echo $this->QuickSlideHook->qs_album_tn($album['Album'], 46, 36); ?>
                 </a>
             </div>
-            
+
             <div class="meta">
                 <span><?php echo $album['Album']['name']; ?></span><br />
                 <em><?php echo __d('quick_slide', '%d images', count($album['Image'])); ?></em>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Gallery extends QuickSlideAppModel {
     public $useTable = 'qs_galleries';
     public $order = array('Gallery.created' => 'DESC');

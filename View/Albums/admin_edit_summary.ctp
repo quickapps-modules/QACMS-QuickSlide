@@ -9,7 +9,7 @@
             <?php
                 echo $this->Form->input('Album.name',
                     array(
-                        'label' => 
+                        'label' =>
                             $this->QuickSlideHook->qs_tooltip(
                                 'Album Title',
                                 'This identifies this album within the management system, and also appears as your album title in the SlideShow Player.'
@@ -37,7 +37,7 @@
                             0 => __d('quick_slide', 'Inactive'),
                             1 => __d('quick_slide', 'Active')
                         ),
-                        'label' => 
+                        'label' =>
                             $this->QuickSlideHook->qs_tooltip(
                                 'Status',
                                 'Controls whether this album is available for publication. `Inactive` will keep this album from appearing in a gallery. `Active` will make this album available for inclusion in a gallery.'
@@ -46,7 +46,7 @@
                 );
             ?>
 
-            <?php echo $this->Form->label('Album.XmlFilepath', __d('quick_slide', 'XML file path')); ?>            
+            <?php echo $this->Form->label('Album.XmlFilepath', __d('quick_slide', 'XML file path')); ?>
             <em><?php echo $this->Html->url("/quick_slide/xml/data/album:{$this->data['Album']['id']}", true); ?></em>
 
             <p><?php echo $this->Form->submit(__d('quick_slide', 'Embed Code'), array('onclick' => 'return false;', 'id' => 'EmbedCodeBtn')); ?></p>
@@ -68,7 +68,7 @@
         </p>
     <?php echo $this->Html->useTag('fieldsetend'); ?>
 
-    <?php 
+    <?php
         echo $this->Html->useTag('fieldsetstart',
             $this->QuickSlideHook->qs_tooltip(
                 'Galleries added to',

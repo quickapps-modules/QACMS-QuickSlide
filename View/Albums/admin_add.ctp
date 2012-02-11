@@ -3,7 +3,7 @@
         <?php
             echo $this->Form->input('Album.name',
                 array(
-                    'label' => 
+                    'label' =>
                         $this->QuickSlideHook->qs_tooltip(
                             'Album Title',
                             'This identifies this album within the management system, and also appears as your album title in the SlideShow Player.'
@@ -12,7 +12,7 @@
             );
         ?>
 
-        <?php 
+        <?php
             echo $this->Form->input('Album.description',
                 array(
                     'type' => 'textarea',

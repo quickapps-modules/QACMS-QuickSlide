@@ -17,7 +17,7 @@ class XmlController extends QuickSlideAppController {
             $gallery = intval($this->params['named']['gallery']);
 
             if ($gallery = $this->Gallery->findById($gallery)) {
-                $album_ids = $this->Link->find('all', 
+                $album_ids = $this->Link->find('all',
                     array(
                         'conditions' => array('Link.gid' => $gallery['Gallery']['id']),
                         'recursive' => -1

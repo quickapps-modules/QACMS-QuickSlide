@@ -20,7 +20,7 @@
             <option value="images"><?php echo __d('quick_slide', 'Content'); ?></option>
             <option value="audio"><?php echo __d('quick_slide', 'Album Audio'); ?></option>
         </select>
-        
+
         <div id="btnBrowse">&nbsp;</div>
 
         <p>
@@ -41,7 +41,7 @@
                         ext[1] = '<?php echo __d('quick_slide', 'Images') ?>';
                         ext[2] = 'image';
                     break;
-                    
+
                     case "audio":
                         ext[0] = '*.mp3;';
                         ext[1] = '<?php echo __d('quick_slide', 'Audio files') ?>';
@@ -85,7 +85,7 @@
                     button_height: 22,
                     button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
                     button_cursor: SWFUpload.CURSOR.HAND,
-                    
+
                     custom_settings: {
                         progressTarget: 'fsUploadProgress',
                         cancelButtonId: 'btnCancel'

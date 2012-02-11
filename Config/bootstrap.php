@@ -15,7 +15,7 @@
             "image/jpg",
             "image/png"
         )
-    ); 
+    );
 
     Configure::write('qs_exts',
         array(

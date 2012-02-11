@@ -2,7 +2,7 @@
 if (!defined('MAGICK_PATH')) {
     define('MAGICK_PATH_FINAL', 'convert');
 } elseif (strpos(strtolower(MAGICK_PATH), 'c:\\') !== false) {
-    define('MAGICK_PATH_FINAL', '"' . MAGICK_PATH . '"');    
+    define('MAGICK_PATH_FINAL', '"' . MAGICK_PATH . '"');
 } else {
     define('MAGICK_PATH_FINAL', MAGICK_PATH);
 }
@@ -33,7 +33,7 @@ if (!function_exists('imagerotate')) {
                     for ($y = 0; $y < ($src_y); $y++) {
                         for ($x = 0; $x < ($src_x); $x++) {
                             $color = imagecolorat($src_img, $x, $y);
-                            
+
                             imagesetpixel($rotate, $dest_x - $y - 1, $x, $color);
                         }
                     }
@@ -43,7 +43,7 @@ if (!function_exists('imagerotate')) {
                 for ($y = 0; $y < ($src_y); $y++) {
                     for ($x = 0; $x < ($src_x); $x++) {
                         $color = imagecolorat($src_img, $x, $y);
-                        
+
                         imagesetpixel($rotate, $y, $dest_y - $x - 1, $color);
                     }
                 }
@@ -53,7 +53,7 @@ if (!function_exists('imagerotate')) {
                 for ($y = 0; $y < ($src_y); $y++) {
                     for ($x = 0; $x < ($src_x); $x++) {
                         $color = imagecolorat($src_img, $x, $y);
-                        
+
                         imagesetpixel($rotate, $dest_x - $x - 1, $dest_y - $y - 1, $color);
                     }
                 }
@@ -72,7 +72,7 @@ class QS {
         $ext = QS::findexts(basename($filename));
         $ThumbFolder = str_replace(basename($filename), '', $filename) . 'cache' . DS;
 
-        if (!file_exists($ThumbFolder)) { 
+        if (!file_exists($ThumbFolder)) {
             QS::rmkdir($ThumbFolder);
         }
 
@@ -102,7 +102,7 @@ class QS {
                 break;
 
                 case preg_match("/gif|GIF/", $ext):
-                    if (imagetypes() & IMG_GIF) { 
+                    if (imagetypes() & IMG_GIF) {
                         $src_img = imagecreatefromgif($name);
                         $type = 'gif';
                     } else {
@@ -111,7 +111,7 @@ class QS {
                 break;
             }
 
-            if (!isset($src_img)) { 
+            if (!isset($src_img)) {
                 return;
             }
 
@@ -123,7 +123,7 @@ class QS {
             if ($square) {
                 if ($original_aspect >= $new_aspect) {
                     $thumb_w = ($new_h*$old_x)/$old_y;
-                    $thumb_h = $new_h;                
+                    $thumb_h = $new_h;
                     $pos_x = $thumb_w * ($x/100);
                     $pos_y = $thumb_h * ($y/100);
                 } else {
@@ -136,13 +136,13 @@ class QS {
                 $crop_y = $pos_y - ($new_h/2);
                 $crop_x = $pos_x - ($new_w/2);
 
-                if ($crop_y < 0) { 
+                if ($crop_y < 0) {
                     $crop_y = 0;
                 } else if (($crop_y+$new_h) > $thumb_h) {
                     $crop_y = $thumb_h - $new_h;
                 }
 
-                if ($crop_x < 0) { 
+                if ($crop_x < 0) {
                     $crop_x = 0;
                 } else if (($crop_x+$new_w) > $thumb_w) {
                     $crop_x = $thumb_w - $new_w;
@@ -160,7 +160,7 @@ class QS {
                     $thumb_h = ($new_w*$old_y)/$old_x;
                 } else {
                     if ($new_h > $old_y) {
-                        copy($name, $filename); 
+                        copy($name, $filename);
                     }
 
                     $thumb_w = ($new_h*$old_x)/$old_y;
@@ -170,27 +170,27 @@ class QS {
 
             $dst_img_one = imagecreatetruecolor($thumb_w,$thumb_h);
 
-            imagecopyresampled($dst_img_one, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y); 
+            imagecopyresampled($dst_img_one, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y);
 
             if ($square) {
                 $dst_img = imagecreatetruecolor($new_w, $new_h);
 
-                imagecopyresampled($dst_img, $dst_img_one, 0, 0, $crop_x, $crop_y, $new_w, $new_h, $new_w, $new_h); 
+                imagecopyresampled($dst_img, $dst_img_one, 0, 0, $crop_x, $crop_y, $new_w, $new_h, $new_w, $new_h);
             } else {
                 $dst_img = $dst_img_one;
             }
 
             if ($type == 'png') {
-                imagepng($dst_img, $filename); 
+                imagepng($dst_img, $filename);
             } elseif ($type == 'gif') {
                 imagegif($dst_img, $filename);
             } else {
-                imagejpeg($dst_img, $filename, $quality); 
+                imagejpeg($dst_img, $filename, $quality);
             }
 
             imagedestroy($dst_img);
-            imagedestroy($dst_img_one); 
-            imagedestroy($src_img); 
+            imagedestroy($dst_img_one);
+            imagedestroy($src_img);
 
             $specs = getimagesize($filename);
 
@@ -217,7 +217,7 @@ class QS {
     function rotateImage($sourceFile, $destImageName, $degreeOfRotation) {
         if (!function_exists('imagerotate') || !file_exists($sourceFile)) {
             return false;
-        }    
+        }
 
         $gd = QS::gdVersion();
 
@@ -249,7 +249,7 @@ class QS {
                 break;
             }
 
-            if (!isset($src_img)) { 
+            if (!isset($src_img)) {
                 return;
             }
 
@@ -257,7 +257,7 @@ class QS {
             if ($type == 'png') {
                 $new = imagerotate($src_img, $degreeOfRotation, 0);
 
-                imagepng($new, $destImageName, 9); 
+                imagepng($new, $destImageName, 9);
             } elseif ($type == 'gif') {
                 if(!function_exists("imagerotate")) {
                     $new = imagerotate($src_img, $degreeOfRotation, true);
@@ -269,7 +269,7 @@ class QS {
             } else {
                 $new = imagerotate($src_img, $degreeOfRotation, 0);
 
-                imagejpeg($new, $destImageName, 100); 
+                imagejpeg($new, $destImageName, 100);
             }
         }
     }
@@ -331,7 +331,7 @@ class QS {
  * Return URL for the given video file
  *
  * @param string $movie_path full path to video file
- */ 
+ */
     function movieThumbUrl($movie_path) {
         $p = func_get_args();
         $movie_path = array_shift($p);
@@ -375,7 +375,7 @@ class QS {
  *
  */
     function directory($dir, $filters = 'all') {
-        if ($filters == 'accepted') { 
+        if ($filters == 'accepted') {
             $filters = 'jpg,JPG,JPEG,jpeg,gif,GIF,png,PNG,swf,SWF,flv,FLV';
         }
 

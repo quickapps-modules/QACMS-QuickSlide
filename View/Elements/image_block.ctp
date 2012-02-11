@@ -5,7 +5,7 @@ if (QS::isImg($image['src'])) {
     $arr = $image['anchor'];
 
     if (empty($arr)) {
-        $arr['x'] = $arr['y'] = 50; 
+        $arr['x'] = $arr['y'] = 50;
     }
 
     $path = "{$imageFolder}{$image['src']}";
@@ -40,9 +40,9 @@ if (QS::isImg($image['src'])) {
         <?php } else { ?>
             <a href="" class="inactive-image-btn actBtn" title="<?php echo __d('quick_slide', 'Activate'); ?>" onClick="toggle_image(<?php echo $image['id']; ?>); return false;"></a>
         <?php } ?>
-        
+
         <a href="" title="<?php echo __d('quick_slide', "Edit"); ?>" class="edit-image-btn" onClick="edit_image('<?php echo $image['id']; ?>'); return false;"></a>
-        
+
         <?php if (QS::isImg($image['src'])) { ?>
             <a href=""  title="<?php echo __d('quick_slide', 'Rotate Left'); ?>" onClick="rotate_img(<?php echo $image['id']; ?>, 90); return false;" class="rotleft-image-btn"></a>
             <a href=""  title="<?php echo __d('quick_slide', 'Rotate Right'); ?>" onClick="rotate_img(<?php echo $image['id']; ?>, -90); return false;" class="rotright-image-btn"></a>
