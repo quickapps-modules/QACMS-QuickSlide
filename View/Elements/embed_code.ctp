@@ -58,6 +58,7 @@
 
         foreach ($attr as $key => $value) {
             if ($value && !in_array($key, array('theme', 'id', 'width', 'height'))) {
+                $key = $key == 'param_xml_path' ? 'param_x_m_l_path' : $key; # fix
                 $value = is_string($value) ? "\"{$value}\"" : "{$value}";
                 $flashvars[] = lcfirst(Inflector::camelize($key)) . ": " . $value;
             }
