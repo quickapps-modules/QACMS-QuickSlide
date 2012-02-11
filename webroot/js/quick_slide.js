@@ -728,8 +728,6 @@ function generate_embed_code() {
         draggable: true,
         modal:true
     });
-
-    save_embed_cookie();
 }
 
 function images_sortable() {
