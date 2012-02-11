@@ -674,13 +674,12 @@ function images_scale_slider() {
 function preview_embed_code() {
     var type = QuickApps.settings.url.match(/\/albums\//gi) ? 'album' : 'gallery';
     var id = type == 'album' ? $('#AlbumId').val() : $('#GalleryId').val();
-    var base_url = (QuickApps.settings.domain.replace(/\/$/, '') + QuickApps.settings.base_url).replace('/' + QuickApps.settings.locale.code + '/', '/');
 
     var flashvars = {
-        xmlFilePath: base_url + 'quick_slide/xml/data/' + type + ':' + id + '/?nc=' + Math.random(),
+        xmlFilePath: QuickApps.settings.base_url + 'quick_slide/xml/data/' + type + ':' + id + '/?nc=' + Math.random(),
     };
 
-    flashvars.paramXMLPath = base_url + 'quick_slide/themes/' + $('#EmbedTheme').val() + '.xml';
+    flashvars.paramXMLPath = QuickApps.settings.base_url + 'quick_slide/themes/' + $('#EmbedTheme').val() + '.xml';
     flashvars.contentScale = $('#EmbedContentScale').val();
     flashvars.transitionStyle = $('#EmbedTransitionStyle').val();
     flashvars.feedbackPreloaderAppearance = $('#EmbedFeedbackPreloaderAppearance').val();
@@ -716,7 +715,7 @@ function preview_embed_code() {
     var attributes = { };
 
     swfobject.embedSWF(
-        base_url + 'files/quick_slide/slideshowpro.swf',
+        QuickApps.settings.base_url + 'files/quick_slide/slideshowpro.swf',
         'embed-preview',
         '480',
         '350',
