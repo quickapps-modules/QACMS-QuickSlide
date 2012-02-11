@@ -13,11 +13,11 @@
         id="<?php echo $album['Album']['id']; ?>"
         title="<?php echo $album['Album']['name']; ?>"
         description="<?php echo $album['Album']['description']; ?>"
-        lgPath="<?php echo $this->Html->('/quick_slide/images/p/?i=', true); ?>"
-        tnPath="<?php echo $this->Html->('/quick_slide/images/p/?i=', true); ?>"
-        audio="<?php echo !empty($album['Album']['audio_file']) ? $this->Html->("/files/quick_slide/album-audio/{$album['Album']['audio_file']}", true) : ''; ?>"
+        lgPath="<?php echo $this->Html->url('/quick_slide/images/p/?i=', true); ?>"
+        tnPath="<?php echo $this->Html->url('/quick_slide/images/p/?i=', true); ?>"
+        audio="<?php echo !empty($album['Album']['audio_file']) ? $this->Html->url("/files/quick_slide/album-audio/{$album['Album']['audio_file']}", true) : ''; ?>"
         audioCaption="<?php echo !empty($album['Album']['audio_caption']) ? $album['Album']['audio_caption']: ''; ?>"
-        tn="<?php echo !empty($album['Album']['aTn']) ? $this->Html->("/files/quick_slide/album-{$album['Album']['id']}/{$album['Album']['aTn']}", true) : ''; ?>"
+        tn="<?php echo !empty($album['Album']['aTn']) ? $this->Html->url("/files/quick_slide/album-{$album['Album']['id']}/{$album['Album']['aTn']}", true) : ''; ?>"
     >
         <?php if (!empty($album['Image'])): ?>
             <?php
@@ -28,18 +28,18 @@
 
                     if (empty($image['anchor'])) {
                         $image['anchor']['x'] = $image['anchor']['y'] = 50;
-                    }                
+                    }
 
                     if (QS::isImg($image['src'])) {
                         $src = QS::p($album_path . $image['src'], $_GET['w'], $_GET['h'], $_GET['q'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
                         $tn = QS::p($album_path . $image['src'] , $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
                     } else {
-                        $src = $this->Html->("/files/quick_slide/album-{$album['Album']['id']}/{$image['src']}", true);
-                        $tn = QS::movieThumb($album_path . $image['src'], $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
+                        $src = $this->Html->url("/files/quick_slide/album-{$album['Album']['id']}/{$image['src']}", true);
+                        $tn = QS::movieThumbUrl($album_path . $image['src'], $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
                     }
 
                     if (!empty($image['author'])) {
-                        $image['caption'] .= ' / ' . __d('quick_slide', 'Author: %s', $image['author']);  
+                        $image['caption'] .= ' / ' . __d('quick_slide', 'Author: %s', $image['author']);
                     }
             ?>
                 <img
