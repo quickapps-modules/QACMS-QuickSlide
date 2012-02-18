@@ -14,6 +14,12 @@ class ImagesController extends QuickSlideAppController {
         parent::__construct($request, $response);
     }
 
+    public function beforeFilter() {
+        $this->Auth->allow('p');
+
+        parent::beforeFilter();
+    }
+
     public function admin_video_thumb($video, $image) {
         $image = $this->Image->findById($image);
         $video = $this->Image->findById($video);
