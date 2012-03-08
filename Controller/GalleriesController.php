@@ -25,6 +25,7 @@ class GalleriesController extends QuickSlideAppController {
         }
 
         $this->data = $this->Gallery->find('first', array('conditions' => "Gallery.id = {$id}"));
+        $this->Layout['javascripts']['file'][] = '/quick_slide/js/swfobject.js';
 
         $this->JqueryUI->add('dialog');
         $this->JqueryUI->theme();
