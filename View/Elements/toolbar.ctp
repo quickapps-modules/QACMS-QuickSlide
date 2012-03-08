@@ -13,8 +13,8 @@
         );
     } else {
         $links = array(
-            array(__d('quick_slide', 'Albums'), '/admin/quick_slide/albums/', 'pattern' => '*quick_slide/albums*'),
-            array(__d('quick_slide', 'Galleries'), '/admin/quick_slide/galleries', 'pattern' => '*quick_slide/galleries*')
+            array(__d('quick_slide', 'Albums'), '/admin/quick_slide/albums/', 'pattern' => '*quick_slide/albums/index/*'),
+            array(__d('quick_slide', 'Galleries'), '/admin/quick_slide/galleries', 'pattern' => '*quick_slide/galleries/index/*')
         );
 
         if ($this->request->params['controller'] == 'albums') {
