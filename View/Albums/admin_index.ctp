@@ -28,7 +28,7 @@
         'paginate' => true,
         'headerPosition' => 'top',
         'tableOptions' => array('width' => '100%', 'class' => 'albums-list'),
-        'rowOptions' => array('class' => 'album {php} return "{Album.status}" == "1" ? "active" : "inactive"; {/php}')
+        'trOptions' => array('class' => 'album {php} return "{Album.status}" == "1" ? "active" : "inactive"; {/php}')
     );
 ?>
 
