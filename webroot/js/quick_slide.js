@@ -729,12 +729,8 @@ function generate_embed_code() {
 
     code += '[quick_slide ';
         code += 'id=' + type + '-' + id +  '\n';
-
-        if (!isNaN($('#EmbedWidth').val()) && !isNaN($('#EmbedHeight').val())) {
-            code += 'width=' + $('#EmbedWidth').val() +  '\n';
-            code += 'height=' + $('#EmbedHeight').val() + '\n';
-        }
-
+        code += !isNaN(parseInt($('#EmbedWidth').val())) ? 'width=' + $('#EmbedWidth').val() +  '\n' : 'width=480' +  '\n';
+        code += !isNaN(parseInt($('#EmbedHeight').val())) ? 'width=' + $('#EmbedHeight').val() +  '\n' : 'height=350' +  '\n';
         code += 'theme=' + $('#EmbedTheme').val() + '\n';
         code += 'content_scale="' + $('#EmbedContentScale').val() + '"\n';
         code += 'transition_style="' + $('#EmbedTransitionStyle').val() + '"\n';
