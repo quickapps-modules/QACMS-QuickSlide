@@ -39,7 +39,8 @@
                     }
 
                     if (!empty($image['author'])) {
-                        $image['caption'] .= ' / ' . __d('quick_slide', 'Author: %s', $image['author']);
+                        $image['caption'] .= !empty($image['caption']) ? ' / ' : '';
+                        $image['caption'] .=  __d('quick_slide', 'Author: %s', $image['author']);
                     }
             ?>
                 <img
