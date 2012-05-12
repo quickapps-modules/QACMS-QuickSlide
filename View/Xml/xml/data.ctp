@@ -2,65 +2,65 @@
 <?php Configure::write('debug', 0); ?>
 <gallery
 <?php if (!empty($gallery)): ?>
-    title="<?php echo $gallery['Gallery']['name']; ?>"
-    description="<?php echo $gallery['Gallery']['description']; ?>"
+	title="<?php echo $gallery['Gallery']['name']; ?>"
+	description="<?php echo $gallery['Gallery']['description']; ?>"
 <?php endif; ?>
 >
 <?php if (count($albums)): ?>
-    <?php foreach ($albums as $album): ?>
-    <?php $album_path = QS_FOLDER . "album-{$album['Album']['id']}" . DS; ?>
-    <album
-        id="<?php echo $album['Album']['id']; ?>"
-        title="<?php echo $album['Album']['name']; ?>"
-        description="<?php echo $album['Album']['description']; ?>"
-        lgPath="<?php echo $this->Html->url('/quick_slide/images/p/?i=', true); ?>"
-        tnPath="<?php echo $this->Html->url('/quick_slide/images/p/?i=', true); ?>"
-        audio="<?php echo !empty($album['Album']['audio_file']) ? $this->Html->url("/files/quick_slide/album-audio/{$album['Album']['audio_file']}", true) : ''; ?>"
-        audioCaption="<?php echo !empty($album['Album']['audio_caption']) ? $album['Album']['audio_caption']: ''; ?>"
-        tn="<?php echo !empty($album['Album']['aTn']) ? $this->Html->url("/files/quick_slide/album-{$album['Album']['id']}/{$album['Album']['aTn']}", true) : ''; ?>"
-    >
-        <?php if (!empty($album['Image'])): ?>
-            <?php
-                foreach ($album['Image'] as $image):
-                    if (!$image['status']) {
-                        continue;
-                    }
+	<?php foreach ($albums as $album): ?>
+	<?php $album_path = QS_FOLDER . "album-{$album['Album']['id']}" . DS; ?>
+	<album
+		id="<?php echo $album['Album']['id']; ?>"
+		title="<?php echo $album['Album']['name']; ?>"
+		description="<?php echo $album['Album']['description']; ?>"
+		lgPath="<?php echo $this->Html->url('/quick_slide/images/p/?i=', true); ?>"
+		tnPath="<?php echo $this->Html->url('/quick_slide/images/p/?i=', true); ?>"
+		audio="<?php echo !empty($album['Album']['audio_file']) ? $this->Html->url("/files/quick_slide/album-audio/{$album['Album']['audio_file']}", true) : ''; ?>"
+		audioCaption="<?php echo !empty($album['Album']['audio_caption']) ? $album['Album']['audio_caption']: ''; ?>"
+		tn="<?php echo !empty($album['Album']['aTn']) ? $this->Html->url("/files/quick_slide/album-{$album['Album']['id']}/{$album['Album']['aTn']}", true) : ''; ?>"
+	>
+		<?php if (!empty($album['Image'])): ?>
+			<?php
+				foreach ($album['Image'] as $image):
+					if (!$image['status']) {
+						continue;
+					}
 
-                    if (empty($image['anchor'])) {
-                        $image['anchor']['x'] = $image['anchor']['y'] = 50;
-                    }
+					if (empty($image['anchor'])) {
+						$image['anchor']['x'] = $image['anchor']['y'] = 50;
+					}
 
-                    if (QS::isImg($image['src'])) {
-                        $src = QS::p($album_path . $image['src'], $_GET['w'], $_GET['h'], $_GET['q'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
-                        $tn = QS::p($album_path . $image['src'] , $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
-                    } else {
-                        $src = $this->Html->url("/files/quick_slide/album-{$album['Album']['id']}/{$image['src']}", true);
-                        $tn = QS::movieThumbUrl($album_path . $image['src'], $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
-                    }
+					if (QS::isImg($image['src'])) {
+						$src = QS::p($album_path . $image['src'], $_GET['w'], $_GET['h'], $_GET['q'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
+						$tn = QS::p($album_path . $image['src'] , $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
+					} else {
+						$src = $this->Html->url("/files/quick_slide/album-{$album['Album']['id']}/{$image['src']}", true);
+						$tn = QS::movieThumbUrl($album_path . $image['src'], $_GET['tw'], $_GET['th'], $_GET['tq'], 1, $image['anchor']['x'], $image['anchor']['y'], 0);
+					}
 
-                    if (!empty($image['author'])) {
-                        $image['caption'] .= !empty($image['caption']) ? ' / ' : '';
-                        $image['caption'] .=  __d('quick_slide', 'Author: %s', $image['author']);
-                    }
-            ?>
-                <img
-                    src="<?php echo $src; ?>"
-                    tn="<?php echo $tn; ?>"
-                    file="<?php echo $src; ?>"
-                    target="<?php echo $image['target'] == 1 ?  "_self" : "_blank" ; ?>"
-                    <?php echo !empty($image['title']) ? "title=\"{$image['title']}\"" : ''; ?>
-                    <?php echo !empty($image['caption']) ? "caption=\"{$image['caption']}\"" : ''; ?>
-                    <?php echo !empty($image['link']) ? "link=\"{$image['link']}\"" : ''; ?>
-                    <?php echo !empty($image['pause']) ? "pause=\"{$image['pause']}\"" : ''; ?>
-                    <?php echo !empty($image['tags']) ? "tags=\"{$image['tags']}\"" : ''; ?>
-                />
-            <?php endforeach; ?>
-        <?php else: ?>
-            <!-- You have not added any images to this album yet -->
-        <?php endif; ?>
-    </album>
-    <?php endforeach; ?>
+					if (!empty($image['author'])) {
+						$image['caption'] .= !empty($image['caption']) ? ' / ' : '';
+						$image['caption'] .=  __d('quick_slide', 'Author: %s', $image['author']);
+					}
+			?>
+				<img
+					src="<?php echo $src; ?>"
+					tn="<?php echo $tn; ?>"
+					file="<?php echo $src; ?>"
+					target="<?php echo $image['target'] == 1 ?  "_self" : "_blank" ; ?>"
+					<?php echo !empty($image['title']) ? "title=\"{$image['title']}\"" : ''; ?>
+					<?php echo !empty($image['caption']) ? "caption=\"{$image['caption']}\"" : ''; ?>
+					<?php echo !empty($image['link']) ? "link=\"{$image['link']}\"" : ''; ?>
+					<?php echo !empty($image['pause']) ? "pause=\"{$image['pause']}\"" : ''; ?>
+					<?php echo !empty($image['tags']) ? "tags=\"{$image['tags']}\"" : ''; ?>
+				/>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<!-- You have not added any images to this album yet -->
+		<?php endif; ?>
+	</album>
+	<?php endforeach; ?>
 <?php else: ?>
-    <!-- You have not activated any albums yet -->
+	<!-- You have not activated any albums yet -->
 <?php endif; ?>
 </gallery>
