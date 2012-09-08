@@ -2,7 +2,7 @@
 class QuickSlideHookHelper extends AppHelper {
 	public function beforeLayout() {
 		if ($this->_View->request->params['plugin'] == 'quick_slide') {
-			$this->_View->Layout->blockPush(array('body' => $this->_View->element('toolbar')), 'toolbar');
+			$this->_View->Block->push(array('body' => $this->_View->element('toolbar')), 'toolbar');
 		}
 	}
 

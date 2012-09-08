@@ -57,13 +57,13 @@
 <div style="width:49%; float:right;">
 	<?php echo $this->Html->useTag('fieldsetstart', __d('quick_slide', 'History')); ?>
 		<p>
-			<?php echo $this->Layout->userAvatar($this->data['CreatedBy'], array('width' => 24, 'height' => 24, 'align' => 'left')); ?>
+			<?php echo $this->User->avatar($this->data['CreatedBy'], array('width' => 24, 'height' => 24, 'align' => 'left')); ?>
 			&nbsp;
 			<?php echo __d('quick_slide', 'This album was created by %s on %s.', "<b>{$this->data['CreatedBy']['name']}</b>", date(__d('quick_slide', 'F jS, Y'), $this->data['Album']['created'])); ?>
 		</p>
 
 		<p>
-			<?php echo $this->Layout->userAvatar($this->data['ModifiedBy'], array('width' => 24, 'height' => 24, 'align' => 'left')); ?>
+			<?php echo $this->User->avatar($this->data['ModifiedBy'], array('width' => 24, 'height' => 24, 'align' => 'left')); ?>
 			&nbsp;<?php printf(__d('quick_slide', "The last user to modify this album was %s on %s."), "<b>{$this->data['ModifiedBy']['name']}</b>", date(__d('quick_slide', 'F jS, Y'), $this->data['Album']['modified'])); ?>
 		</p>
 	<?php echo $this->Html->useTag('fieldsetend'); ?>
