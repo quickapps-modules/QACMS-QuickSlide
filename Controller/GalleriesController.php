@@ -27,15 +27,15 @@ class GalleriesController extends QuickSlideAppController {
 		$this->data = $this->Gallery->find('first', array('conditions' => "Gallery.id = {$id}"));
 		$this->Layout['javascripts']['file'][] = '/quick_slide/js/swfobject.js';
 
-		$this->JqueryUI->add('dialog');
-		$this->JqueryUI->theme();
+		$this->jQueryUI->add('dialog');
+		$this->jQueryUI->theme();
 		$this->title(__d('quick_slide', 'Gallery: %s', $this->data['Gallery']['name']));
 	}
 
 	public function admin_albums($id) {
-		$this->JqueryUI->theme();
-		$this->JqueryUI->add('sortable');
-		$this->JqueryUI->add('dialog');
+		$this->jQueryUI->theme();
+		$this->jQueryUI->add('sortable');
+		$this->jQueryUI->add('dialog');
 
 		$this->data = $this->Gallery->find('first', array('conditions' => "Gallery.id = {$id}"));
 		$this->title(__d('quick_slide', 'Gallery: %s', $this->data['Gallery']['name']));

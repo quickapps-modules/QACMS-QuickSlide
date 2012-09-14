@@ -23,6 +23,6 @@ class QuickSlideAppController extends AppController {
 			$this->Layout['stylesheets']['all'][] = '/quick_slide/css/quick_slide.css';
 		}
 
-		$this->JqueryUI->add('effects.all');
+		$this->jQueryUI->add('effects.all');
 	}
 }

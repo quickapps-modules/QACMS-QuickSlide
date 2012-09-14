@@ -16,6 +16,7 @@ class ImagesController extends QuickSlideAppController {
 
 	public function beforeFilter() {
 		$this->Auth->allow('p');
+		$this->QuickApps->disableSecurity();
 
 		parent::beforeFilter();
 	}

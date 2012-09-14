@@ -55,7 +55,7 @@
 	<?php
 		unset($__attr['id'], $__attr['width'], $__attr['height']);
 
-		$attr['xml_file_path'] .= '/&nc=' . rand(100, 9999);
+		$attr['xml_file_path'] .= '/?nc=' . rand(100, 9999);
 		$flashvars = array();
 
 		foreach ($attr as $key => $value) {

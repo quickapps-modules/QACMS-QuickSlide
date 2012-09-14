@@ -5,7 +5,7 @@ class AlbumsController extends QuickSlideAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->JqueryUI->theme();
+		$this->jQueryUI->theme();
 		$this->setCrumb(array(__d('quick_slide', 'Albums'), '/admin/quick_slide/albums'));
 	}
 
@@ -57,10 +57,10 @@ class AlbumsController extends QuickSlideAppController {
 				$this->Layout['javascripts']['file'][] = '/quick_slide/js/swfobject.js';
 				$this->Layout['javascripts']['file'][] = '/comment/js/jquery.scrollTo-min.js';
 
-				$this->JqueryUI->add('slider');
-				$this->JqueryUI->add('droppable');
-				$this->JqueryUI->add('draggable');
-				$this->JqueryUI->add('sortable');
+				$this->jQueryUI->add('slider');
+				$this->jQueryUI->add('droppable');
+				$this->jQueryUI->add('draggable');
+				$this->jQueryUI->add('sortable');
 
 				$view = 'edit_content';
 			break;
@@ -79,7 +79,7 @@ class AlbumsController extends QuickSlideAppController {
 						$this->flashMsg(__d('quick_slide', 'This album is inactive. Set its publish status to active to make it available to galleries.'), 'alert', 'album-off');
 					}
 
-					$this->JqueryUI->add('dialog');
+					$this->jQueryUI->add('dialog');
 
 					$this->Layout['javascripts']['file'][] = '/quick_slide/js/swfobject.js';
 					$view = 'edit_summary';

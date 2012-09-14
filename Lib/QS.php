@@ -68,7 +68,7 @@ if (!function_exists('imagerotate')) {
 }
 
 class QS {
-	function image_resize($filename, $new_w, $new_h, $quality, $square = false, $x, $y, $force = false) {
+	public function image_resize($filename, $new_w, $new_h, $quality, $square = false, $x, $y, $force = false) {
 		$ext = QS::findexts(basename($filename));
 		$ThumbFolder = str_replace(basename($filename), '', $filename) . 'cache' . DS;
 
@@ -79,7 +79,7 @@ class QS {
 		$ThumbCacheName	= str_replace(".{$ext}", "", basename($filename)) . "_{$new_w}_{$new_h}_{$quality}_{$square}_{$x}_{$y}_{$force}.{$ext}";
 		$ThumOld = file_exists($ThumbFolder.$ThumbCacheName) ? filectime($ThumbFolder.$ThumbCacheName) : 0;
 		$name = $filename;
-		$filename = $ThumbFolder.$ThumbCacheName;
+		$filename = $ThumbFolder . $ThumbCacheName;
 
 		if ((time()-604800) > $ThumOld) {
 			switch(true) {
@@ -214,7 +214,7 @@ class QS {
 		}
 	}
 
-	function rotateImage($sourceFile, $destImageName, $degreeOfRotation) {
+	public function rotateImage($sourceFile, $destImageName, $degreeOfRotation) {
 		if (!function_exists('imagerotate') || !file_exists($sourceFile)) {
 			return false;
 		}
@@ -274,7 +274,7 @@ class QS {
 		}
 	}
 
-	function gdVersion() {
+	public function gdVersion() {
 		if (function_exists('exec') &&
 			(DS == '/' || (DS == '\\' && MAGICK_PATH_FINAL != 'convert'))
 		) {
@@ -299,7 +299,7 @@ class QS {
 		}
 	}
 
-	function _gd() {
+	public function _gd() {
 		if (function_exists('gd_info')) {
 			$gd = gd_info();
 			$version = preg_replace('/[[:alpha:][:space:]()]+/', '', $gd['GD Version']);
@@ -318,7 +318,7 @@ class QS {
  * @param string $filename Name of the file.
  * @return string
  */
-	function findexts ($filename) {
+	public function findexts($filename) {
 		$filename = strtolower($filename) ;
 		$exts = explode("[/\\.]", $filename) ;
 		$n = count($exts)-1;
@@ -332,7 +332,7 @@ class QS {
  *
  * @param string $movie_path full path to video file
  */
-	function movieThumbUrl($movie_path) {
+	public function movieThumbUrl($movie_path) {
 		$p = func_get_args();
 		$movie_path = array_shift($p);
 		$src = basename($movie_path);
@@ -358,15 +358,15 @@ class QS {
 		return Router::url($filename, true);
 	}
 
-	function isVideo($fn) {
+	public function isVideo($fn) {
 		return preg_match('/(\.flv|\.mov|\.mp4|\.m4a|\.m4v|\.3gp|\.3g2)/', $fn);
 	}
 
-	function isSwf($fn) {
+	public function isSwf($fn) {
 		return preg_match('/\.swf/', $fn);
 	}
 
-	function isImg($fn) {
+	public function isImg($fn) {
 		return (!QS::isSwf($fn) && !QS::isVideo($fn));
 	}
 
@@ -374,7 +374,7 @@ class QS {
  * Grab all files in a directory.
  *
  */
-	function directory($dir, $filters = 'all') {
+	public function directory($dir, $filters = 'all') {
 		if ($filters == 'accepted') {
 			$filters = 'jpg,JPG,JPEG,jpeg,gif,GIF,png,PNG,swf,SWF,flv,FLV';
 		}
@@ -412,7 +412,7 @@ class QS {
  * Pic encoder
  *
  */
-	function p() {
+	public function p() {
 		$args = func_get_args();
 		$args = join(',', $args);
 		$enc = base64_encode($args);
@@ -426,7 +426,7 @@ class QS {
  * @param string $pathname Folder path.
  * @param mixed $mode
  */
-	function rmkdir($pathname, $mode = 0777) {
+	public function rmkdir($pathname, $mode = 0777) {
 		if (is_array($pathname)) {
 			foreach ($pathname as $path) {
 				QS::rmkdir($path, $mode);

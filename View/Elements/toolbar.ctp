@@ -28,4 +28,4 @@
 		$links[] = array(__d('quick_slide', 'Help'), '/admin/system/help/module/QuickSlide');
 	}
 
-	echo $this->Layout->toolbar($links);
+	echo $this->Menu->toolbar($links);
