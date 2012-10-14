@@ -13,9 +13,9 @@
 
 <h3>Usage</h3>
 <dl>
-	<dt>Adding Album & Galleries</dt>
 	<dd>
-		Once you've installed <em>Quick Slide</em> a new <em>Content Type</em> will be added on the <?php echo $this->Html->link('Create Content', '/admin/node/contents/create'); ?> section: <b><?php echo __d('quick_slide', 'Quick Slide Content'); ?></b>
+		Once you've installed <em>Quick Slide</em> a new <em>Content Type</em> will be added on the <?php echo $this->Html->link('Create Content', '/admin/node/contents/create'); ?> 
+		section: <b><?php echo __d('quick_slide', 'Quick Slide Content'); ?></b>
 	</dd>
 
 	<dt>Showing Slideshows</dt>
