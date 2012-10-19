@@ -6,7 +6,7 @@
 			Once you've purchased and downloaded SlideShowPro, you're just about ready to go.
 			Extract the downloaded zip package (SlideShowPro_for_Flash_{xxx}.zip) somewhere to your computer and you'll see a folder inside called "standalone".
 			This folder contains a few files which you'll need to upload via FTP.
-			You'll need to upload the file <b>slideshowpro.swf</b> to <em>QuickSlide</em> folder <em><?php echo str_replace('quick_slide', '<b>quick_slide</b>', realpath(QS_FOLDER)); ?><em>
+			You'll need to upload the file <b>slideshowpro.swf</b> to <em>QuickSlide</em> folder <em><?php echo str_replace('quick_slide', '<b>quick_slide</b>', realpath(QS_FOLDER)); ?></em>
 		</p>
 	</dd>
 </dl>
@@ -14,8 +14,10 @@
 <h3>Usage</h3>
 <dl>
 	<dd>
-		Once you've installed <em>Quick Slide</em> a new <em>Content Type</em> will be added on the <?php echo $this->Html->link('Create Content', '/admin/node/contents/create'); ?> 
-		section: <b><?php echo __d('quick_slide', 'Quick Slide Content'); ?></b>
+		<p>
+			Once you've installed <em>Quick Slide</em> a new <em>Content Type</em> will be added on the <?php echo $this->Html->link('Create Content', '/admin/node/contents/create'); ?> 
+			section: <b><?php echo __d('quick_slide', 'Quick Slide Content'); ?></b>
+		</p>
 	</dd>
 
 	<dt>Showing Slideshows</dt>
@@ -39,7 +41,7 @@
 		</p>
 
 		<p>
-			<h4>Example</h4>
+			<h5>Example</h5>
 			The following hooktag code will render a SWF Player for the album with an <b>ID equal to 1</b>. Player's dimmensions are <b>600x400</b> and will use the <b>chrome</b> theme.
 		</p>
 
