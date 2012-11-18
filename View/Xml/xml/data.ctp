@@ -26,6 +26,8 @@
 						continue;
 					}
 
+					$image['anchor'] = !is_array($image['anchor']) ? @unserialize($image['anchor']) : $image['anchor'];
+
 					if (empty($image['anchor'])) {
 						$image['anchor']['x'] = $image['anchor']['y'] = 50;
 					}
