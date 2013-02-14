@@ -1,6 +1,4 @@
 <?php
-$imageFolder = QS_FOLDER . "album-{$album['id']}" . DS;
-
 if (QS::isImg($image['src'])) {
 	$arr = $image['anchor'];
 
@@ -8,11 +6,24 @@ if (QS::isImg($image['src'])) {
 		$arr['x'] = $arr['y'] = 50;
 	}
 
-	$path = "{$imageFolder}{$image['src']}";
-	$img_url = $this->Html->url('/quick_slide/images/p/'). QS::p($path, 172, 132, 80, 1, $arr['x'], $arr['y'], 0);
+	$encode = QS::p(
+		array(
+			'src' => $image['src'],
+			'album_id' => $image['aid'],
+			'anchor_x' => $arr['x'],
+			'anchor_y' => $arr['y']
+		)
+	);
+	$img_url = $this->Html->url('/quick_slide/images/p/') . $encode;
 } else {
 	# Check for video thumb
-	$img_url = QS::movieThumbUrl("{$imageFolder}{$image['src']}", 172, 132, 80, 0, 0, 0, 0);
+	$img_url = QS::movieThumbUrl(
+		array(
+			'src' => $image['src'],
+			'album_id' => $image['aid'],
+			'quality' => 80
+		)
+	);
 }
 ?>
 

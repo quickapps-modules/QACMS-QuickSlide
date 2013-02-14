@@ -4,17 +4,16 @@ class QuickSlideHooktagsHelper extends AppHelper {
 
 	public function quick_slide($attr, $content = null, $code = '') {
 		$out = '';
+		$viewer = !defined('QS_NO_SWF') ? 'viewer_flash' : 'viewer_js';
 
-		if (!defined('QS_NO_SWF')) {
-			if (!$this->__count) {
-				$out .= $this->_View->Html->script('/quick_slide/js/swfobject.js');
-			}
-
-			$out .= $this->_View->element('QuickSlide.embed_code', compact('attr'));
-			$this->__count++;
-		} else {
-			$out = '<!-- QuickSlide: QuickSlidePro Player (slideshowpro.swf) was not found -->';
+		if (!$this->__count && !defined('QS_NO_SWF')) {
+			$out .= $this->_View->Html->script('/quick_slide/js/swfobject.js');
+		} elseif (!$this->__count && defined('QS_NO_SWF')) {
+			
 		}
+
+		$out .= $this->_View->element("QuickSlide.{$viewer}", compact('attr'));
+		$this->__count++;
 
 		return $out;
 	}

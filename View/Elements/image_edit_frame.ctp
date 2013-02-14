@@ -49,14 +49,21 @@
 
 <?php else: ?>
 	<?php
-		$path = QS_FOLDER . "album-{$this->data['Image']['aid']}" . DS . $this->data['Image']['src'];
-		$info = getimagesize($path);
+		$info = getimagesize(QS_FOLDER . "album-{$this->data['Image']['aid']}" . DS . $this->data['Image']['src']);
+		$encode = QS::p(
+			array(
+				'src' => $this->data['Image']['src'],
+				'album_id' => $this->data['Image']['aid'],
+				'width' => 600,
+				'height' => 700
+			)
+		);
 	?>
 
 	<div id="the_img">
 		<div id="img_wrapper">
 			<?php echo $this->Html->image('/quick_slide/img/focal_point.png', array('id' => 'anchor', 'style' => 'display:none;')); ?>
-			<img id="img_edit" src="<?php echo $this->Html->url('/quick_slide/images/p/' . QS::p($path, 600, 400, 70, 0, 0, 0, 0)); ?>" border="0" class="<?php echo $info[0] >= $info[1] ? 'wide' : 'tall'; ?>" />
+			<img id="img_edit" src="<?php echo $this->Html->url('/quick_slide/images/p/' . $encode); ?>" border="0" class="<?php echo $info[0] >= $info[1] ? 'wide' : 'tall'; ?>" />
 		</div>
 
 		<div class="edit-buttons">

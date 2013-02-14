@@ -27,9 +27,9 @@ class ImagesController extends QuickSlideAppController {
 		$aid = $image['Image']['aid'];
 		$imageSrc = $image['Image']['src'];
 		$videoSrc = $video['Image']['src'];
-		$newImageName = '___tn___' . str_replace('.' . QS::findexts($videoSrc), '.', $videoSrc) . QS::findexts($imageSrc);
-		$oldImageName = '___tn___' . str_replace('.' . QS::findexts($videoSrc), '*.', $videoSrc) . '*';
-		$newImageTn = str_replace('.' . QS::findexts($imageSrc), '', $imageSrc) . '*.' . QS::findexts($imageSrc);
+		$newImageName = '___tn___' . QS::filename($videoSrc) . '_' . $imageSrc;
+		$oldImageName = '___tn___' . QS::filename($videoSrc) . '_*';
+		$newImageTn =  '*' . $imageSrc;
 		$leaving['lg'] = glob(QS_FOLDER . "album-{$aid}" . DS . $newImageName);
 		$leaving['olg'] = glob(QS_FOLDER . "album-{$aid}" . DS . $oldImageName);
 		$leaving['tn'] = glob(QS_FOLDER . "album-{$aid}" . DS . 'cache' . DS . $oldImageName);
@@ -134,9 +134,17 @@ class ImagesController extends QuickSlideAppController {
 			'id' => $id,
 			'anchor' => $this->data
 		);
+		$encode = QS::p(
+			array(
+				'src' => $image['Image']['src'],
+				'album_id' => $image['Image']['aid'],
+				'anchor_x' => $this->data['x'],
+				'anchor_y' => $this->data['y']
+			)
+		);
 
 		$this->Image->save($data);
-		die(Router::url("/quick_slide/images/p/") . QS::p($folder . $image['Image']['src'], 172, 132, 70, 1, $this->data['x'], $this->data['y'], 0));
+		die(Router::url("/quick_slide/images/p/") . $encode);
 	}
 
 	public function admin_edit($id = false) {
@@ -201,17 +209,106 @@ class ImagesController extends QuickSlideAppController {
  * @return die
  */
 	public function p($args = false) {
+		Configure::write('debug', 1);
+
 		$args = !$args ? $this->request->query['i'] : $args;
-		$specs = explode(',', base64_decode($args));
-		$a[7] = isset($a[7]) ? trim($a[7]) : false;
+		$args = explode('&', $args);
+		$args = $args[0];
+		$a = explode(',', base64_decode($args));
 
 		if (isset($this->request->query['full'])) {
 			$full = explode(',', $this->request->query['full']);
-			$specs[1] = $full[0];
-			$specs[2] = $full[1];
+			$a[2] = $full[0];
+			$a[3] = $full[1];
 		}
 
-		@QS::image_resize($specs[0], $specs[1], $specs[2], $specs[3], $specs[4], $specs[5], $specs[6], $specs[7]);
+		$file = $fn = basename($a[0]);
+		$ext = QS::findexts($file);
+		$aid = $a[1];
+		$w = QS::n($a[2]);
+		$h = QS::n($a[3]);
+		$s = QS::n($a[4]);
+		$q = QS::n($a[5], 100);
+		$sh = QS::n($a[6], 0);
+		$x = QS::n($a[7], 50);
+		$y = QS::n($a[8], 50);
+		$force = QS::n($a[9], 0);
+
+		define('IMG_PATH', QS_FOLDER . "album-{$aid}");
+
+		$base_dir = IMG_PATH;
+		$original = IMG_PATH . DS . $file;
+
+		if (!file_exists(IMG_PATH)) {
+			exit;
+		}
+
+		if ($a[4] == 2) {
+			$path_to_cache = $original;
+		} else {
+			$fn .= "_{$w}_{$h}_{$s}_{$q}_{$sh}_{$x}_{$y}.{$ext}";
+			$base_dir = IMG_PATH . DS . 'cache';
+
+			if (!file_exists($base_dir)) {
+				QS::rmkdir($base_dir);
+			}
+
+			$path_to_cache = IMG_PATH . DS . 'cache' . DS . $fn;
+		}
+
+		if (dirname($path_to_cache) !== $base_dir) {
+			header('HTTP/1.1 403 Forbidden'); 
+			exit;
+		}
+
+		$cache_old = file_exists($path_to_cache) ? filectime($path_to_cache) : 0;
+
+		if (!file_exists($path_to_cache) || (time()-604800) > $cache_old) { // +1 week cache
+			if ($s == 2) {
+				copy($original, $path_to_cache);
+			} else {
+				if (!is_dir(dirname($path_to_cache))) {
+					$parent_perms = substr(sprintf('%o', fileperms(dirname(dirname($path_to_cache)))), -4);
+					$old = umask(0);
+					mkdir(dirname($path_to_cache), octdec($parent_perms));
+					umask($old);
+				}
+
+				QS::imageResize(
+					array(
+						'name' => $original,
+						'filename' => $path_to_cache,
+						'new_w' => $w,
+						'new_h' => $h,
+						'quality' => $q,
+						'square' => $s,
+						'gd' => null,
+						'sharpening' => $sh,
+						'x' => $x,
+						'y' => $y,
+						'force' => $force
+					)
+				);
+			}
+		}
+
+		$mtime = filemtime($path_to_cache);
+		$etag = md5($path_to_cache . $mtime);
+		$disabled_functions = explode(',', str_replace(' ', '', ini_get('disable_functions')));
+		$specs = getimagesize($path_to_cache);
+
+		header('Content-type: ' . $specs['mime']);
+		header('Content-length: ' . filesize($path_to_cache));
+		header('Cache-Control: public');
+		header('Expires: ' . gmdate('D, d M Y H:i:s', strtotime('+1 year')));
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path_to_cache)));
+		header('ETag: ' . $etag);
+
+		if (is_callable('readfile') && !in_array('readfile', $disabled_functions)) {
+			readfile($path_to_cache);
+		} else {
+			die(file_get_contents($path_to_cache));
+		}
 
 		die(' ');
 	}

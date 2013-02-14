@@ -20,7 +20,7 @@ class Image extends QuickSlideAppModel {
 		$this->clearCaches($image['Image']['src'], $path);
 
 		if (QS::isVideo($image['Image']['src'])) {
-			$frames = glob($path . '___tn___' . str_replace('.' . QS::findexts($this->data['Image']['src']), '', $this->data['Image']['src']) . '*');
+			$frames = glob($path . '___tn___' . $this->data['Image']['src'] . '*');
 
 			if (!empty($frames)) {
 				foreach($frames as $f) {
@@ -32,7 +32,7 @@ class Image extends QuickSlideAppModel {
 
 	public function clearCaches($str, $path) {
 		$str = str_replace('.' . QS::findexts($this->data['Image']['src']), '', $this->data['Image']['src']);
-		$caches = glob($path . 'cache' . DS . $str . '*');
+		$caches = glob($path . 'cache' . DS . '*' . $str . '*');
 
 		if (!empty($caches)) {
 			foreach($caches as $cache) {
